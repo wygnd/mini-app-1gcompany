@@ -2,7 +2,7 @@ import {Optional} from "sequelize";
 
 export interface IOrderAttributes {
 	orderId: string;
-	pickDate: string;
+	pickDate: number;
 	pickType: string;
 	pickAddress: string;
 	product: string;

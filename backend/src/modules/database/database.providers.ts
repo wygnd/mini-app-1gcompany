@@ -1,7 +1,7 @@
 import {ConfigService} from "@nestjs/config";
-import {Provider} from "@nestjs/common";
 import {Sequelize, SequelizeOptions} from "sequelize-typescript";
 import {UserModel} from "../users/entities/users.entity";
+import {OrdersModel} from "../orders/enitites/orders.entity";
 
 
 export const databaseProviders = [
@@ -10,7 +10,7 @@ export const databaseProviders = [
 		provide: "SEQUELIZE",
 		useFactory: async (configService: ConfigService) => {
 			const sequelize = new Sequelize(configService.get<SequelizeOptions>('database'));
-			sequelize.addModels([UserModel]);
+			sequelize.addModels([UserModel, OrdersModel]);
 			await sequelize.sync();
 			return sequelize;
 		},
