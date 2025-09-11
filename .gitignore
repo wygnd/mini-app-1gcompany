@@ -11,6 +11,7 @@ coverage
 
 # production
 build
+dist
 
 # misc
 .DS_Store
@@ -27,11 +28,6 @@ yarn-debug.log*
 yarn-error.log*
 
 
-# compiled output
-/dist
-/node_modules
-/build
-
 # Logs
 logs
 *.log
@@ -39,7 +35,7 @@ pnpm-debug.log*
 lerna-debug.log*
 
 # IDEs and editors
-/.idea
+.idea
 .project
 .classpath
 .c9/

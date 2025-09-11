@@ -1,7 +1,7 @@
 import {Inject, Injectable, UnauthorizedException} from "@nestjs/common";
 import {ConfigService} from "@nestjs/config";
 import {createHmac} from 'crypto';
-import {TelegramUser} from "./interfaces/user-telegram.interface";
+import {TelegramUser} from "../users/interfaces/user-telegram.interface";
 
 @Injectable()
 export class TelegramAuthService {

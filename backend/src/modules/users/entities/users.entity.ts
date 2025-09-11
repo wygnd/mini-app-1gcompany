@@ -1,20 +1,21 @@
-import {Column, DataType, Table, Model} from "sequelize-typescript";
+import {Column, DataType, Table, Model, BelongsToMany, BelongsTo} from "sequelize-typescript";
 import {IUserAttributes, IUserCreationAttributes, UserRoles} from "../interfaces/users.interface";
 import {ApiProperty} from "@nestjs/swagger";
+import {OrdersModel} from "../../orders/enitites/orders.entity";
 
 @Table({tableName: "users"})
 export class UserModel extends Model<IUserAttributes, IUserCreationAttributes> {
 
-	@Column({type: DataType.STRING, unique: true, autoIncrement: true, primaryKey: true})
+	@Column({type: DataType.INTEGER, unique: true, autoIncrement: true, primaryKey: true})
 	@ApiProperty({
 		name: "user id",
 		type: "number",
 		example: 1,
 		description: "unique user id"
 	})
-	userId: string;
+	userId: number;
 
-	@Column({type: DataType.STRING, unique: true})
+	@Column({type: DataType.STRING, unique: true, allowNull: false})
 	@ApiProperty({
 		name: "Telegram unique identifier",
 		type: "string",
@@ -22,16 +23,17 @@ export class UserModel extends Model<IUserAttributes, IUserCreationAttributes> {
 	})
 	telegramId: string;
 
-	@Column({type: DataType.ENUM(...Object.values(UserRoles))})
+	@Column({type: DataType.ENUM(...Object.values(UserRoles)), defaultValue: UserRoles.USER})
 	@ApiProperty({
 		name: "User role",
 		type: "string",
 		example: "user",
-		enum: UserRoles
+		enum: UserRoles,
+		default: UserRoles.USER
 	})
 	role: UserRoles;
 
-	@Column({type: DataType.STRING, allowNull: false})
+	@Column({type: DataType.STRING, allowNull: true})
 	@ApiProperty({
 		name: "user name",
 		type: "string",
@@ -39,7 +41,7 @@ export class UserModel extends Model<IUserAttributes, IUserCreationAttributes> {
 	})
 	name: string;
 
-	@Column({type: DataType.STRING, allowNull: false})
+	@Column({type: DataType.STRING, allowNull: true})
 	@ApiProperty({
 		name: "user phone",
 		type: "string",
@@ -47,11 +49,14 @@ export class UserModel extends Model<IUserAttributes, IUserCreationAttributes> {
 	})
 	phone: string;
 
-	@Column({type: DataType.STRING, allowNull: false})
+	@Column({type: DataType.STRING, allowNull: true})
 	@ApiProperty({
 		name: "Organization name",
 		type: "string",
 		example: "OOO Company"
 	})
 	organization: string;
+
+	@BelongsTo(() => OrdersModel)
+	orders: OrdersModel[]
 }

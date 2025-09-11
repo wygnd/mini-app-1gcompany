@@ -4,13 +4,14 @@ import { AppService } from './app.service';
 import {ConfigModule} from "@nestjs/config";
 import databaseConfig from "./common/conifg/database.config";
 import constantsConfig from "./common/conifg/constants.config";
+import {UsersModule} from "./modules/users/users.module";
 
 @Module({
   imports: [
 		ConfigModule.forRoot({
 			isGlobal: true,
 			load: [databaseConfig, constantsConfig]
-		})
+		}), UsersModule
   ],
   controllers: [AppController],
   providers: [AppService],

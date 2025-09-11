@@ -1,7 +1,7 @@
 import {Body, Controller, Post} from "@nestjs/common";
 import {UsersService} from "./users.service";
 import {ApiTags} from "@nestjs/swagger";
-import {TelegramAuthService} from "./telegram-auth.service";
+import {TelegramAuthService} from "../auth/telegram-auth.service";
 
 @ApiTags("users")
 @Controller('users')
@@ -15,7 +15,6 @@ export class UsersController {
 	async login(@Body('initData') initData: string) {
 		try {
 			const userFromTelegram = this.telegramService.validateData(initData);
-
 			return await this.usersService.findOrCreateUser(userFromTelegram);
 		} catch(error) {
 			throw error;

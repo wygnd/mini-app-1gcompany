@@ -1,7 +1,7 @@
 import {Optional} from "sequelize";
 
 export interface IOrderAttributes {
-	orderId: string;
+	orderId: number;
 	pickDate: number;
 	pickType: string;
 	pickAddress: string;
@@ -9,6 +9,7 @@ export interface IOrderAttributes {
 	provider: string;
 	for: string;
 	attachment: string;
+	userId: number;
 }
 
 export type IOrderCreationAttributes = Optional<IOrderAttributes, 'orderId'>;

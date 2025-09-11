@@ -1,6 +1,7 @@
-import {Column, DataType, Model, Table} from "sequelize-typescript";
+import {Column, DataType, ForeignKey, HasOne, Model, Table} from "sequelize-typescript";
 import {IOrderAttributes, IOrderCreationAttributes} from "../interfaces/orders.interface";
 import {ApiProperty} from "@nestjs/swagger";
+import {UserModel} from "../../users/entities/users.entity";
 
 @Table({tableName: "orders"})
 export class OrdersModel extends Model<IOrderAttributes, IOrderCreationAttributes> {
@@ -12,12 +13,12 @@ export class OrdersModel extends Model<IOrderAttributes, IOrderCreationAttribute
 		example: 1,
 	})
 	@Column({
-		type: DataType.STRING,
+		type: DataType.INTEGER,
 		unique: true,
 		autoIncrement: true,
 		primaryKey: true
 	})
-	orderId: string;
+	orderId: number;
 
 	@ApiProperty({
 		name: "Date of pick",
@@ -98,5 +99,13 @@ export class OrdersModel extends Model<IOrderAttributes, IOrderCreationAttribute
 		description: "",
 		type: "string"
 	})
+	@Column({type: DataType.STRING, allowNull: false})
 	attachment: string;
+
+	@ForeignKey(() => UserModel)
+	@Column({type: DataType.INTEGER, allowNull: false, field: "user_id"})
+	userId: number;
+
+	@HasOne(() => UserModel)
+	user: UserModel;
 }

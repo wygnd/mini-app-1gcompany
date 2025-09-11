@@ -1,12 +1,12 @@
 import {Optional} from 'sequelize'
 
 export interface IUserAttributes {
-	userId: string;
-	telegramId: string;
+	userId: number;
+	telegramId: number;
 	role: UserRoles;
-	name: string;
-	phone: string;
-	organization: string;
+	name?: string;
+	phone?: string;
+	organization?: string;
 }
 
 export type IUserCreationAttributes = Optional<IUserAttributes, 'userId'>;
