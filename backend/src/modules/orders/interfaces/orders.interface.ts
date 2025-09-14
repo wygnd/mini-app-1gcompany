@@ -1,8 +1,8 @@
 import {Optional} from "sequelize";
 
 export enum OrdersStatus {
-	WAITING_PICKUP = "waiting for pick up",
-	WAITING_TZ = 'waiting tz',
+	WAITING_PICKUP = "waiting_pickup",
+	WAITING_TZ = 'waiting_tz',
 	PENDING = "pending",
 	SUCCESS = "success",
 }
