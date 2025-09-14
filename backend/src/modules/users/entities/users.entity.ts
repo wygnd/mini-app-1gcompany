@@ -1,4 +1,4 @@
-import {Column, DataType, Table, Model, BelongsToMany, BelongsTo} from "sequelize-typescript";
+import {Column, DataType, Table, Model, HasMany} from "sequelize-typescript";
 import {IUserAttributes, IUserCreationAttributes, UserRoles} from "../interfaces/users.interface";
 import {ApiProperty} from "@nestjs/swagger";
 import {OrdersModel} from "../../orders/enitites/orders.entity";
@@ -57,6 +57,18 @@ export class UserModel extends Model<IUserAttributes, IUserCreationAttributes> {
 	})
 	organization: string;
 
-	@BelongsTo(() => OrdersModel)
+	@Column({
+		type: DataType.BOOLEAN,
+		defaultValue: true,
+		allowNull: false
+	})
+	@ApiProperty({
+		description: "Will user see notifications",
+		type: Boolean,
+		example: false
+	})
+	show_notifications: boolean;
+
+	@HasMany(() => OrdersModel)
 	orders: OrdersModel[]
 }

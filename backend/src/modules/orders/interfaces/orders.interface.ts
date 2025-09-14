@@ -1,5 +1,12 @@
 import {Optional} from "sequelize";
 
+export enum OrdersStatus {
+	WAITING_PICKUP = "waiting for pick up",
+	WAITING_TZ = 'waiting tz',
+	PENDING = "pending",
+	SUCCESS = "success",
+}
+
 export interface IOrderAttributes {
 	orderId: number;
 	pickDate: number;
@@ -9,6 +16,7 @@ export interface IOrderAttributes {
 	provider: string;
 	for: string;
 	attachment: string;
+	status: OrdersStatus
 	userId: number;
 }
 

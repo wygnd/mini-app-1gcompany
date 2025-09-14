@@ -1,15 +1,15 @@
 import {CanActivate, ExecutionContext, Injectable, UnauthorizedException} from "@nestjs/common";
-import {TelegramAuthService} from "./telegram-auth.service";
-import {CustomRequest} from "../../common/interfaces/custom-request.interface";
+import {TelegramAuthService} from "../telegram-auth.service";
+import {CustomRequest} from "../../../common/interfaces/custom-request.interface";
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class TelegramAuthGuard implements CanActivate {
 	constructor(private readonly telegramService: TelegramAuthService) {
 	}
 
 	async canActivate(context: ExecutionContext): Promise<boolean> {
 			const request = context.switchToHttp().getRequest<CustomRequest>();
-			const initData = request.body.InitData as string;
+			const initData = request.headers['telegram-api-init-data'] as string;
 
 			if (!initData) throw new UnauthorizedException("Invalid init data");
 

@@ -1,7 +1,8 @@
 import {UserModel} from "./entities/users.entity";
-import {Inject, Injectable} from "@nestjs/common";
-import {TelegramUser} from "./interfaces/user-telegram.interface";
+import {Inject, Injectable, NotFoundException} from "@nestjs/common";
+import {TelegramUser} from "../telegram/interfaces/user-telegram.interface";
 import {UserRoles} from "./interfaces/users.interface";
+import {UpdateUserDto} from "./dtos/update-user.dto";
 
 @Injectable()
 export class UsersService {
@@ -23,5 +24,18 @@ export class UsersService {
 		});
 
 		return user;
+	}
+
+
+	public async updateUser(userFields: UpdateUserDto, userId: number) {
+			const userFromDB = await this.userRepository.findOne({
+				where: {
+					telegramId: userId
+				}
+			});
+
+			if(!userFromDB) throw new NotFoundException("User not found");
+
+			return await userFromDB.update({...userFields});
 	}
 }

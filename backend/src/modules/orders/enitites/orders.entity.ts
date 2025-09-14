@@ -1,5 +1,5 @@
-import {Column, DataType, ForeignKey, HasOne, Model, Table} from "sequelize-typescript";
-import {IOrderAttributes, IOrderCreationAttributes} from "../interfaces/orders.interface";
+import {BelongsTo, Column, DataType, ForeignKey, Model, Table} from "sequelize-typescript";
+import {IOrderAttributes, IOrderCreationAttributes, OrdersStatus} from "../interfaces/orders.interface";
 import {ApiProperty} from "@nestjs/swagger";
 import {UserModel} from "../../users/entities/users.entity";
 
@@ -9,7 +9,7 @@ export class OrdersModel extends Model<IOrderAttributes, IOrderCreationAttribute
 	@ApiProperty({
 		name: "order id",
 		description: "unique order identifier",
-		type: "number",
+		type: Number,
 		example: 1,
 	})
 	@Column({
@@ -22,7 +22,7 @@ export class OrdersModel extends Model<IOrderAttributes, IOrderCreationAttribute
 
 	@ApiProperty({
 		name: "Date of pick",
-		type: "number",
+		type: Number,
 		description: "Дата забора",
 		example: 1757522685078,
 	})
@@ -35,7 +35,7 @@ export class OrdersModel extends Model<IOrderAttributes, IOrderCreationAttribute
 
 	@ApiProperty({
 		name: "Kind of pick address",
-		type: "string",
+		type: String,
 		description: "Место забора (ЮВ, ТЯК, Садовод, склад поставщика)",
 		example: "Склад поставщика",
 	})
@@ -49,7 +49,8 @@ export class OrdersModel extends Model<IOrderAttributes, IOrderCreationAttribute
 	@ApiProperty({
 		name: "Pick address",
 		description: "Точный адрес забора (номер линии, павильона, адрес)",
-		type: "string"
+		type: String,
+		example: "Mira street 40"
 	})
 	@Column({
 		type: DataType.STRING,
@@ -61,7 +62,7 @@ export class OrdersModel extends Model<IOrderAttributes, IOrderCreationAttribute
 	@ApiProperty({
 		name: "Products",
 		description: "Объем или количество товара",
-		type: "string",
+		type: String,
 		example: "100кг"
 	})
 	@Column({
@@ -73,7 +74,7 @@ export class OrdersModel extends Model<IOrderAttributes, IOrderCreationAttribute
 	@ApiProperty({
 		name: "Provider",
 		description: "Контакт поставщика",
-		type: "string",
+		type: String,
 		example: "+7926174956"
 	})
 	@Column({
@@ -85,7 +86,7 @@ export class OrdersModel extends Model<IOrderAttributes, IOrderCreationAttribute
 	@ApiProperty({
 		name: "For who",
 		description: "Для кого",
-		type: "string",
+		type: String,
 		example: "ООО Company"
 	})
 	@Column({
@@ -96,16 +97,27 @@ export class OrdersModel extends Model<IOrderAttributes, IOrderCreationAttribute
 
 	@ApiProperty({
 		name: "Attachment",
-		description: "",
-		type: "string"
+		description: "Attachment",
+		type: String,
+		example: "id"
 	})
 	@Column({type: DataType.STRING, allowNull: false})
 	attachment: string;
+
+	@ApiProperty({
+		name: "Order status",
+		type: String,
+		enum: OrdersStatus,
+		example: OrdersStatus.PENDING,
+		default: OrdersStatus.WAITING_PICKUP
+	})
+	@Column({type: DataType.ENUM(...Object.keys(OrdersStatus)), allowNull: false, defaultValue: OrdersStatus.WAITING_PICKUP})
+	status: OrdersStatus;
 
 	@ForeignKey(() => UserModel)
 	@Column({type: DataType.INTEGER, allowNull: false, field: "user_id"})
 	userId: number;
 
-	@HasOne(() => UserModel)
+	@BelongsTo(() => UserModel)
 	user: UserModel;
 }

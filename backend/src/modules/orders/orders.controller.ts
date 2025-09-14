@@ -4,48 +4,70 @@ import {
 	Get, HttpException, HttpStatus,
 	Param,
 	ParseIntPipe, Patch,
-	Post,
+	Post, Query,
 	Req,
-	Res,
-	UnauthorizedException,
 	UseGuards
 } from "@nestjs/common";
 import {OrdersService} from "./orders.service";
 import {UserRoles} from "../users/interfaces/users.interface";
-import {Roles} from "../auth/roles.decorator";
-import {AuthGuard} from "../auth/auth.guard";
-import {RolesGuard} from "../auth/roles.guard";
+import {Roles} from "../../common/decorators/roles.decorator";
+import {TelegramAuthGuard} from "../telegram/guards/telegram-auth.guard";
+import {RolesGuard} from "../../common/guards/roles.guard";
 import type {CustomRequest} from "../../common/interfaces/custom-request.interface";
 import {GetOrdersDto} from "./dtos/get-orders.dto";
 import {CreateOrderDto} from "./dtos/create-order.dto";
 import {UpdateOrderFields} from "./dtos/update-order.fields";
+import {ApiBody, ApiExtraModels, ApiOperation, ApiQuery, ApiResponse, ApiTags} from "@nestjs/swagger";
+import {OrdersModel} from "./enitites/orders.entity";
+import {ApiExceptions} from "../../common/decorators/api-exceptions.decorator";
+import {ApiAuthorizationHeaderDecorator} from "../../common/decorators/api-authorization-header.decorator";
+import {PaginatedResponseDto} from "../../common/dto/paginated-response.dto";
+import {ApiPaginatedResponse} from "../../common/decorators/api-paginated-response.decorator";
+import {PaginationDto} from "../../common/dto/pagination.dto";
+import {OrdersPaginationDto} from "./dtos/pagination.dto";
 
-@UseGuards(AuthGuard, RolesGuard)
+@ApiExtraModels(OrdersModel, PaginatedResponseDto)
+@ApiTags('Orders')
+@ApiAuthorizationHeaderDecorator()
+@UseGuards(TelegramAuthGuard, RolesGuard)
 @Controller('orders')
 export class OrdersController {
 	constructor(
 		private readonly ordersService: OrdersService
 	){}
 
+	@ApiOperation({ summary: 'Get orders by id', description: 'At most part need for clients' })
+	@ApiResponse({
+		status: HttpStatus.OK,
+		description: 'Success',
+		type: [OrdersModel]
+	})
+	@ApiExceptions()
 	@Get("/private")
-	async getUserOrders(@Req() request: CustomRequest) {
+	async getUserOrders(@Query() queryParams: OrdersPaginationDto, @Req() request: CustomRequest) {
 		try {
-			return await this.ordersService.getOrdersByUserId(request.user.id);
+			return await this.ordersService.getOrdersByUserId(request.user.id, queryParams);
 		} catch (error) {
 			throw error;
 		}
 	}
 
+	@ApiOperation({summary: "Get oll orders", description: "Ger all orders. Only administrators can request"})
+	@ApiPaginatedResponse(OrdersModel)
+	@ApiExceptions()
 	@Get("/all")
 	@Roles(UserRoles.ADMIN)
-	async getOrders(@Body() body: GetOrdersDto) {
+	async getOrders(@Query() queryParams: OrdersPaginationDto) {
 		try {
-			return await this.ordersService.getOrders(body.page);
+			return await this.ordersService.getOrders(queryParams);
 		} catch (error) {
 			throw error;
 		}
 	}
 
+	@ApiOperation({summary: "Get order details by id"})
+	@ApiResponse({status: HttpStatus.OK, description: 'Success', type: OrdersModel})
+	@ApiExceptions()
 	@Get("/:order_id")
 	async getOrderById(@Param('order_id', ParseIntPipe) order_id: number) {
 		try {
@@ -55,7 +77,10 @@ export class OrdersController {
 		}
 	}
 
-	@Post()
+	@ApiOperation({summary: "Create new order"})
+	@ApiResponse({status: HttpStatus.CREATED, description: 'Success', type: OrdersModel})
+	@ApiExceptions()
+	@Post("/create")
 	async createOrder(@Body() createOrderFields: CreateOrderDto, @Req() request: CustomRequest) {
 		try {
 			return await this.ordersService.createOrder(createOrderFields, request.user.id);
@@ -64,8 +89,11 @@ export class OrdersController {
 		}
 	}
 
+	@ApiOperation({summary: "Update order"})
+	@ApiResponse({status: HttpStatus.OK, description: 'Success', type: OrdersModel })
+	@ApiExceptions()
 	@Roles(UserRoles.ADMIN)
-	@Patch()
+	@Patch("/update")
 	async updateOrder(@Body() updateOrderFields: UpdateOrderFields, @Req() request: CustomRequest) {
 		try {
 			return await this.ordersService.updateOrder(updateOrderFields, request.user.id);

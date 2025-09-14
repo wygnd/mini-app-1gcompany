@@ -4,4 +4,5 @@ export class GetOrdersDto {
 	@IsNotEmpty()
 	@IsNumber()
 	page: number;
+
 }
