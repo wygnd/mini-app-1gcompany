@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import axios from "axios";
-import {initData, retrieveLaunchParams} from "@telegram-apps/sdk";
+import {retrieveLaunchParams} from "@telegram-apps/sdk";
 
 export default function App() {
 	useEffect(() => {
