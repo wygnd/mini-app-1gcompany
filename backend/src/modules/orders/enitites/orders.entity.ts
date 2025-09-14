@@ -111,7 +111,7 @@ export class OrdersModel extends Model<IOrderAttributes, IOrderCreationAttribute
 		example: OrdersStatus.PENDING,
 		default: OrdersStatus.WAITING_PICKUP
 	})
-	@Column({type: DataType.ENUM(...Object.keys(OrdersStatus)), allowNull: false, defaultValue: OrdersStatus.WAITING_PICKUP})
+	@Column({type: DataType.ENUM(...Object.values(OrdersStatus)), allowNull: false, defaultValue: OrdersStatus.WAITING_PICKUP})
 	status: OrdersStatus;
 
 	@ForeignKey(() => UserModel)
