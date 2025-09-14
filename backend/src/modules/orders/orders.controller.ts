@@ -14,16 +14,14 @@ import {Roles} from "../../common/decorators/roles.decorator";
 import {TelegramAuthGuard} from "../telegram/guards/telegram-auth.guard";
 import {RolesGuard} from "../../common/guards/roles.guard";
 import type {CustomRequest} from "../../common/interfaces/custom-request.interface";
-import {GetOrdersDto} from "./dtos/get-orders.dto";
 import {CreateOrderDto} from "./dtos/create-order.dto";
 import {UpdateOrderFields} from "./dtos/update-order.fields";
-import {ApiBody, ApiExtraModels, ApiOperation, ApiQuery, ApiResponse, ApiTags} from "@nestjs/swagger";
+import {ApiExtraModels, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
 import {OrdersModel} from "./enitites/orders.entity";
 import {ApiExceptions} from "../../common/decorators/api-exceptions.decorator";
 import {ApiAuthorizationHeaderDecorator} from "../../common/decorators/api-authorization-header.decorator";
 import {PaginatedResponseDto} from "../../common/dto/paginated-response.dto";
 import {ApiPaginatedResponse} from "../../common/decorators/api-paginated-response.decorator";
-import {PaginationDto} from "../../common/dto/pagination.dto";
 import {OrdersPaginationDto} from "./dtos/pagination.dto";
 
 @ApiExtraModels(OrdersModel, PaginatedResponseDto)
@@ -65,7 +63,7 @@ export class OrdersController {
 		}
 	}
 
-	@ApiOperation({summary: "Get order details by id"})
+	@ApiOperation({summary: "Get orders details by id"})
 	@ApiResponse({status: HttpStatus.OK, description: 'Success', type: OrdersModel})
 	@ApiExceptions()
 	@Get("/:order_id")
@@ -77,7 +75,7 @@ export class OrdersController {
 		}
 	}
 
-	@ApiOperation({summary: "Create new order"})
+	@ApiOperation({summary: "Create new orders"})
 	@ApiResponse({status: HttpStatus.CREATED, description: 'Success', type: OrdersModel})
 	@ApiExceptions()
 	@Post("/create")
@@ -89,7 +87,7 @@ export class OrdersController {
 		}
 	}
 
-	@ApiOperation({summary: "Update order"})
+	@ApiOperation({summary: "Update orders"})
 	@ApiResponse({status: HttpStatus.OK, description: 'Success', type: OrdersModel })
 	@ApiExceptions()
 	@Roles(UserRoles.ADMIN)

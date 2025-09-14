@@ -7,8 +7,8 @@ import {UserModel} from "../../users/entities/users.entity";
 export class OrdersModel extends Model<IOrderAttributes, IOrderCreationAttributes> {
 
 	@ApiProperty({
-		name: "order id",
-		description: "unique order identifier",
+		name: "orders id",
+		description: "unique orders identifier",
 		type: Number,
 		example: 1,
 	})
