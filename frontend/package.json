@@ -10,10 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@telegram-apps/sdk": "^3.11.5",
-    "axios": "^1.12.1",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "@telegram-apps/sdk-react": "^3.3.7",
+    "@telegram-apps/telegram-ui": "^2.1.9",
+    "axios": "^1.12.2",
+    "eruda": "^3.4.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^7.9.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",

@@ -1,39 +1,35 @@
-import {StrictMode} from 'react'
-import {createRoot} from 'react-dom/client'
+import ReactDOM from 'react-dom/client'
 import './index.css'
-import App from "./App.tsx";
-import {init, miniApp, initData} from "@telegram-apps/sdk";
+import {EnvUnsupported} from "./components/EnvUnsupported.tsx";
+import {init} from "./init.ts";
+import {retrieveLaunchParams} from "@telegram-apps/sdk";
+import {StrictMode} from "react";
+import App from "./components/App.tsx";
 
+// if we outside telegram
+import './mockEnv.ts';
 
-(async () => {
-	try {
-		await init();
+const root = ReactDOM.createRoot(document.getElementById('root')!);
 
-		if (miniApp.ready.isAvailable()) {
-			await miniApp.ready();
-			console.log("APPLICATION READY. YES SIR");
-			window.dispatchEvent(new Event("MiniAppReady"));
-		}
+try {
+	const launchParams = retrieveLaunchParams();
+	const {tgWebAppPlatform: platform} = launchParams;
+	const debug = (launchParams.tgWebAppStartParam || '').includes('platformer_debug')
+		|| import.meta.env.DEV;
 
-		initData.restore();
-		initData.state();
-
-		const user = initData.user();
-		console.log("Данные пользователя: ", user);
-
-		if (user) {
-			window.dispatchEvent(new Event("UserReady"));
-		} else {
-			console.log("Ошибка загрузки пользователя");
-		}
-
-	} catch (error) {
-		console.error("Initialization error Telegram SDK: ", error);
-	}
-})();
-
-createRoot(document.getElementById('root')!).render(
-	<StrictMode>
-		<App/>
-	</StrictMode>,
-)
+	// Configure all application dependencies.
+	await init({
+		debug,
+		eruda: debug && ['ios', 'android'].includes(platform),
+		mockForMacOS: platform === 'macos',
+	})
+		.then(() => {
+			root.render(
+				<StrictMode>
+					<App/>
+				</StrictMode>,
+			);
+		});
+} catch (error) {
+	root.render(<EnvUnsupported/>);
+}
