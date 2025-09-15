@@ -1,11 +1,14 @@
 import {StrictMode} from 'react'
 import {createRoot} from 'react-dom/client'
 import './index.css'
-import App from './App.tsx'
-import {init, initData, miniApp} from "@telegram-apps/sdk";
+import {importTelegram} from "./lib/telegram.ts";
+import App from "./App.tsx";
+
 
 (async () => {
 	try {
+		const {init, miniApp, initData} = await importTelegram();
+
 		await init();
 
 		if (miniApp.ready.isAvailable()) {
