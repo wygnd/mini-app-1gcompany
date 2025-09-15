@@ -1,14 +1,12 @@
 import { useEffect } from "react";
 import axios from "axios";
-import {importTelegram} from "./lib/telegram.ts";
+import {retrieveLaunchParams} from "@telegram-apps/sdk";
 
 export default function App() {
 	useEffect(() => {
 
 		async function fetchData() {
 			try {
-				const {retrieveLaunchParams} = await importTelegram();
-
 				const { initDataRaw } = retrieveLaunchParams();
 
 				console.log(initDataRaw);
