@@ -6,8 +6,7 @@ import {retrieveLaunchParams} from "@telegram-apps/sdk";
 import {StrictMode} from "react";
 import App from "./components/App.tsx";
 
-// if we outside telegram
-import './mockEnv.ts';
+// Mock the environment in case, we are outside Telegram.
 
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 
