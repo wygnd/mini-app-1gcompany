@@ -7,4 +7,6 @@ export default defineConfig({
 	optimizeDeps: {
 		exclude: ["@telegram-apps/sdk", "@telegram-apps/sdk-react"],
 	},
+	build: {outDir: "dist"},
+	base: "./"
 })
