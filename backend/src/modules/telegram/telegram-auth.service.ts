@@ -31,7 +31,7 @@ export class TelegramAuthService {
 			.update(dataCheckString)
 			.digest('hex');
 
-		if(computedHash !== secretKey) throw new UnauthorizedException('Invalid initData');
+		if(computedHash !== hash) throw new UnauthorizedException('Invalid initData');
 
 		const userParams = params.get("user");
 
