@@ -16,9 +16,13 @@ export class TelegramAuthService {
 	public validateData(initData: string): null | TelegramUser {
 		try {
 			validate(initData, this.telegramToken);
-			return parse(initData).user || null;
+			return this.parseData(initData);
 		} catch (error) {
 			return null;
 		}
+	}
+
+	public parseData(initData: string): null | TelegramUser {
+		return parse(initData).user || null;
 	}
 }
