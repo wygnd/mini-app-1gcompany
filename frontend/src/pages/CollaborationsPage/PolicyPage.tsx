@@ -1,6 +1,7 @@
 import {FC, useEffect, useState} from "react";
 import {Page} from "@/components/Page.tsx";
 import axios from 'axios'
+import {useSignal, initDataRaw as _initDataRaw} from "@telegram-apps/sdk-react";
 
 interface IUser {
 	userId: number;
@@ -9,17 +10,24 @@ interface IUser {
 	userPhone: string
 }
 
-const sendRequest = async () => {
-	const response = await axios.post<IUser>("https://dependable-enchantment-production-1804.up.railway.app/users/login");
+const sendRequest = async (data: string) => {
+	const response = await axios.post<IUser>("https://dependable-enchantment-production-1804.up.railway.app/users/login", null, {
+		headers: {
+			'telegram-api-init-data': data,
+		}
+	});
 	return response.data;
 }
 
 export const PolicyPage: FC = () => {
+	const initDataRaw = useSignal(_initDataRaw);
 	const [user, setUser] = useState<IUser | null>(null);
+
+	if(!initDataRaw) return;
 
 	useEffect(() => {
 		(async () => {
-			setUser(await sendRequest());
+			setUser(await sendRequest(initDataRaw));
 		})()
 	}, [])
 
