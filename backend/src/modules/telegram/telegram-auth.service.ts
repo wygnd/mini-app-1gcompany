@@ -1,7 +1,7 @@
-import {Injectable, UnauthorizedException} from "@nestjs/common";
+import {Injectable} from "@nestjs/common";
 import {ConfigService} from "@nestjs/config";
-import {createHmac} from 'crypto';
 import {TelegramUser} from "./interfaces/user-telegram.interface";
+import {parse, validate} from "@tma.js/init-data-node";
 
 @Injectable()
 export class TelegramAuthService {
@@ -13,30 +13,12 @@ export class TelegramAuthService {
 		this.telegramToken = configService.get<string>("telegramToken") ?? "";
 	}
 
-	public validateData(initData: string): TelegramUser {
-		const params = new URLSearchParams(initData);
-		const hash = params.get("hash");
-		params.delete("hash");
-
-		const dataCheckString = Array.from(params.entries())
-			.map(([key, value]) => `${key}=${value}`)
-			.sort()
-			.join("\b");
-
-		const secretKey = createHmac('sha256', 'WebAppData')
-			.update(this.telegramToken)
-			.digest('hex');
-
-		const computedHash = createHmac('sha256', secretKey)
-			.update(dataCheckString)
-			.digest('hex');
-
-		if(computedHash !== hash) throw new UnauthorizedException('Invalid initData');
-
-		const userParams = params.get("user");
-
-		if(!userParams) throw new UnauthorizedException('Invalid userData');
-
-		return JSON.parse(userParams) as TelegramUser;
+	public validateData(initData: string): null | TelegramUser {
+		try {
+			validate(initData, this.telegramToken);
+			return parse(initData).user || null;
+		} catch (error) {
+			return null;
+		}
 	}
 }

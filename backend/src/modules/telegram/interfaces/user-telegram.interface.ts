@@ -1,10 +1,12 @@
-
 export interface TelegramUser {
-	id: number;
+	added_to_attachment_menu?: boolean | undefined;
+	allows_write_to_pm?: boolean | undefined;
 	first_name: string;
-	last_name?: string;
-	username?: string;
-	language_code?: string;
-	is_premium?: boolean;
-	allows_write_to_pm?: boolean;
+	id: number;
+	is_bot?: boolean | undefined;
+	is_premium?: boolean | undefined;
+	last_name?: string | undefined;
+	language_code?: string | undefined;
+	photo_url?: string | undefined;
+	username?: string | undefined;
 }

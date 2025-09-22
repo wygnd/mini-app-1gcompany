@@ -9,7 +9,9 @@ export class TelegramAuthGuard implements CanActivate {
 
 	async canActivate(context: ExecutionContext): Promise<boolean> {
 			const request = context.switchToHttp().getRequest<CustomRequest>();
-			const initData = request.headers['telegram-api-init-data'] as string;
+			const [authType, initData] = (request.headers['authorization'] || "").split(' ');
+
+			if(authType !== 'tma') throw new UnauthorizedException('Authorization required');
 
 			if (!initData) throw new UnauthorizedException("Invalid init data");
 
