@@ -13,7 +13,7 @@ interface IUser {
 const sendRequest = async (data: string) => {
 	const response = await axios.post<IUser>("https://dependable-enchantment-production-1804.up.railway.app/users/login", null, {
 		headers: {
-			'tma': data,
+			'authorization': `tma ${data}`,
 		}
 	});
 	return response.data;
