@@ -1,6 +1,6 @@
 import axios from "axios";
 import {API_URL} from "@/utils/contants.ts";
-import {retrieveLaunchParams} from '@telegram-apps/sdk';
+import {initDataRaw} from "@telegram-apps/sdk-react";
 
 const $API = axios.create({
 	withCredentials: true,
@@ -8,9 +8,9 @@ const $API = axios.create({
 })
 
 $API.interceptors.request.use(config => {
-	const {initDataRaw} = retrieveLaunchParams();
+	const initData = initDataRaw();
 
-	if (initDataRaw) config.headers.Authorization = `tma ${initDataRaw}`;
+	if (initData) config.headers.Authorization = `tma ${initData}`;
 
 	return config;
 })
