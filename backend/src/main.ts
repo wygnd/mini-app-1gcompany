@@ -20,7 +20,8 @@ async function bootstrap() {
 	app.use(loggerMiddleware);
 
 	app.enableCors({
-		origin: [config.get('frontendUrl')],
+		origin: true,
+		credentials: true,
 	});
 
   await app.listen(process.env.PORT ?? 3000);
