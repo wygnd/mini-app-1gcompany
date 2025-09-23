@@ -11,7 +11,9 @@ export const databaseProviders = [
 		useFactory: async (configService: ConfigService) => {
 			const sequelize = new Sequelize(configService.get<SequelizeOptions>('database'));
 			sequelize.addModels([UserModel, OrdersModel]);
-			await sequelize.sync();
+			await sequelize.sync({
+				force: true
+			});
 			return sequelize;
 		},
 		inject: [ConfigService],

@@ -15,7 +15,7 @@ export class UserModel extends Model<IUserAttributes, IUserCreationAttributes> {
 	})
 	userId: number;
 
-	@Column({type: DataType.NUMBER, unique: true, allowNull: false})
+	@Column({type: DataType.BIGINT, unique: true, allowNull: false})
 	@ApiProperty({
 		name: "Telegram unique identifier",
 		type: Number,
