@@ -2,12 +2,9 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import {DocumentBuilder, SwaggerModule} from "@nestjs/swagger";
 import {loggerMiddleware} from "./common/middlewares/loggerMiddleware";
-import {ConfigService} from "@nestjs/config";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
-	const configService = app.get(ConfigService);
 
 	// Swagger API
 	const swaggerConfig = new DocumentBuilder()
@@ -19,9 +16,7 @@ async function bootstrap() {
 
 	app.use(loggerMiddleware);
 
-	app.enableCors({
-		origin: [configService.get<string>("frontendUrl")],
-	});
+	app.enableCors();
 
   await app.listen(process.env.PORT ?? 3000);
 }
