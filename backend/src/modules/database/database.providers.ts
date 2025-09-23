@@ -12,7 +12,7 @@ export const databaseProviders = [
 			const sequelize = new Sequelize(configService.get<SequelizeOptions>('database'));
 			sequelize.addModels([UserModel, OrdersModel]);
 			await sequelize.sync({
-				force: true
+				alter: false
 			});
 			return sequelize;
 		},

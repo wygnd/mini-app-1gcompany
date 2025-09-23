@@ -1,35 +1,22 @@
 import {FC, useEffect, useState} from "react";
 import {Page} from "@/components/Page.tsx";
-import axios from 'axios'
 import {useSignal, initDataRaw as _initDataRaw} from "@telegram-apps/sdk-react";
-
-interface IUser {
-	userId: number;
-	telegramId: number;
-	userRole: string;
-	userPhone: string
-}
-
-const sendRequest = async (data: string) => {
-	const response = await axios.post<IUser>("https://dependable-enchantment-production-1804.up.railway.app/users/login", null, {
-		headers: {
-			'authorization': `tma ${data}`,
-		}
-	});
-	return response.data;
-}
+import {login} from "@/http/usersApi.ts";
+import {UserInterface} from "@/types/user.ts";
 
 export const PolicyPage: FC = () => {
 	const initDataRaw = useSignal(_initDataRaw);
-	const [user, setUser] = useState<IUser | null>(null);
+	const [user, setUser] = useState<UserInterface | null>(null);
 
-	if(!initDataRaw) return;
+	if (!initDataRaw) return;
 
 	useEffect(() => {
-		(async () => {
-			setUser(await sendRequest(initDataRaw));
-		})()
+		login()
+			.then(data => setUser(data))
+			.catch(error => console.log(error));
 	}, [])
+
+	console.log(user);
 
 	return (
 		<Page>
@@ -37,6 +24,7 @@ export const PolicyPage: FC = () => {
 			<p>Здесь будут условия сотрудничества</p>
 			{user && (
 				<>
+					<h2>Приветствую, {user.name}</h2>
 					<h2>{user.userId}</h2>
 					<h3>{user.telegramId}</h3>
 				</>
