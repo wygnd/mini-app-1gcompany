@@ -10,7 +10,7 @@ const $API = axios.create({
 $API.interceptors.request.use(config => {
 	const initData = initDataRaw();
 
-	if (initData) config.headers.Authorization = `tma ${initData}`;
+	if (initData) config.headers.authorization = `tma ${initData}`;
 
 	return config;
 })
