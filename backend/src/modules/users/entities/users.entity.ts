@@ -15,13 +15,13 @@ export class UserModel extends Model<IUserAttributes, IUserCreationAttributes> {
 	})
 	userId: number;
 
-	@Column({type: DataType.STRING, unique: true, allowNull: false})
+	@Column({type: DataType.NUMBER, unique: true, allowNull: false})
 	@ApiProperty({
 		name: "Telegram unique identifier",
-		type: "string",
-		example: "9783642879623879"
+		type: Number,
+		example: 13223232323
 	})
-	telegramId: string;
+	telegramId: number;
 
 	@Column({type: DataType.ENUM(...Object.values(UserRoles)), defaultValue: UserRoles.USER})
 	@ApiProperty({

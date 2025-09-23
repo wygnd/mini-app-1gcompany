@@ -12,6 +12,7 @@ export class UsersService {
 	) {}
 
 	public async findOrCreateUser(userData: TelegramUser) {
+		console.log('Trying find user', userData);
 		const [user, _] = await this.userRepository.findOrCreate({
 			where: {
 				telegramId: userData.id
