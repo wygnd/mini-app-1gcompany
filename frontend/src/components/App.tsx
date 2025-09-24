@@ -16,7 +16,7 @@ export function App() {
 		login().then(data => setUser(data));
 	}, [])
 
-	const routesType = user?.role === 'admin' ? adminRoutes : routes;
+	const routesType = user?.role === "admin" ? adminRoutes : routes;
 	return (
 		<AppRoot
 			appearance={isDark ? 'dark' : 'light'}

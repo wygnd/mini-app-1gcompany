@@ -1,0 +1,4 @@
+
+.link_active > div {
+    background: var(--tgui--tertiary_bg_color);
+}
