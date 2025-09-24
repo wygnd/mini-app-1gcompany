@@ -12,18 +12,25 @@ interface Route {
 	Component: ComponentType;
 	title?: string;
 	icon?: JSX.Element;
+	children?: Route[]
 }
 
 export const routes: Route[] = [
 	{path: '/', Component: IndexPage},
 	{path: '/init-data', Component: InitDataPage, title: 'Init Data'},
 	{path: '/policy', Component: PolicyPage, title: 'Условия сотрудничества'},
-	{path: '/logistics', Component: LogisticsPage, title: 'Логистика'},
-	{path: '/logistics/orders', Component: LogisticsPage, title: 'Заказы на забор груза'},
-	{path: '/logistics/orders-package', Component: LogisticsPage, title: 'Заказы на отправку посылок'},
-	{path: '/logistics/orders-return', Component: LogisticsPage, title: 'Заказы на забор возвратов'},
-	{path: '/orders', Component: LogisticsPage, title: 'Обработка товара'},
-	{path: '/orders/terms-of-reference', Component: LogisticsPage, title: 'Техническое задание'},
+	{
+		path: '/logistics', Component: LogisticsPage, title: 'Логистика', children: [
+			{path: '/orders', Component: LogisticsPage, title: 'Заказы на забор груза'},
+			{path: '/orders-package', Component: LogisticsPage, title: 'Заказы на отправку посылок'},
+			{path: '/orders-return', Component: LogisticsPage, title: 'Заказы на забор возвратов'},
+		]
+	},
+	{
+		path: '/orders', Component: LogisticsPage, title: 'Обработка товара', children: [
+			{path: '/terms-of-reference', Component: LogisticsPage, title: 'Техническое задание'},
+		]
+	},
 	{path: '/theme-params', Component: ThemeParamsPage, title: 'Параметры темы'}
 ];
 

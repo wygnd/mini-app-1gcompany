@@ -16,25 +16,25 @@ export function App() {
 		login().then(data => setUser(data));
 	}, [])
 
+	if (!user) return (<h1>Loading...</h1>)
+
+	const routesType = user.role === 'admin' ? adminRoutes : routes;
 	return (
 		<AppRoot
 			appearance={isDark ? 'dark' : 'light'}
 			platform={['macos', 'ios'].includes(lp.tgWebAppPlatform) ? 'ios' : 'base'}
 		>
 			<BrowserRouter>
-				{user
-					?
 				<Routes>
-					{
-						user.role === "admin"
-							? adminRoutes.map((route) => <Route key={route.path} {...route} />)
-							: routes.map((route) => <Route key={route.path} {...route} />)
-					}
+					{routesType.map(({path, Component, children}) => (
+						<Route key={path} element={<Component/>}>
+							{children?.map(({path, Component}) => (
+								<Route key={path} element={<Component/>}/>
+							))}
+						</Route>
+					))}
 					<Route path="*" element={<Navigate to="/"/>}/>
 				</Routes>
-					:
-					<h1>Что-то случилось :(</h1>
-				}
 			</BrowserRouter>
 		</AppRoot>
 	);
