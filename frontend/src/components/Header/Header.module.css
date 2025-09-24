@@ -44,8 +44,7 @@
     height: -webkit-fill-available;
     transform: translateX(-100%);
     z-index: 100;
-    background: var(--tg-theme-bg-color);
-    /*padding: 20px 15px;*/
+    background: var(--tgui--bg_color);
     display: flex;
     flex-direction: column;
     overflow-y: auto;
