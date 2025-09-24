@@ -5,6 +5,7 @@ import {InitDataPage} from '@/pages/InitDataPage.tsx';
 import {LogisticsPage} from "@/pages/Logistics/Logistics.tsx";
 import {PolicyPage} from "@/pages/CollaborationsPage/PolicyPage.tsx";
 import {ThemeParamsPage} from "@/pages/ThemeParamsPage.tsx";
+import {TestAdminPage} from "@/pages/testAdminPage.tsx";
 
 interface Route {
 	path: string;
@@ -28,5 +29,5 @@ export const routes: Route[] = [
 
 export const adminRoutes: Route[] = [
 	...routes,
-	{path: '/admin', Component: IndexPage, title: "Панель администратора"},
+	{path: '/admin', Component: TestAdminPage, title: "Панель администратора"},
 ];
