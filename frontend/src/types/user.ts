@@ -6,4 +6,5 @@ export interface UserInterface {
 	phone?: string;
 	organization?: string;
 	show_notifications: boolean;
+	role: "user" | "admin";
 }

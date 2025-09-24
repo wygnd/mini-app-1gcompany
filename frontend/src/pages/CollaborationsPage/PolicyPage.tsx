@@ -1,22 +1,13 @@
-import {FC, useEffect, useState} from "react";
+import {FC} from "react";
 import {Page} from "@/components/Page.tsx";
 import {useSignal, initDataRaw as _initDataRaw} from "@telegram-apps/sdk-react";
-import {login} from "@/http/usersApi.ts";
-import {UserInterface} from "@/types/user.ts";
+import {useUserStore} from "@/store/userStore.ts";
 
 export const PolicyPage: FC = () => {
 	const initDataRaw = useSignal(_initDataRaw);
-	const [user, setUser] = useState<UserInterface | null>(null);
+	const {user} = useUserStore();
 
 	if (!initDataRaw) return;
-
-	useEffect(() => {
-		login()
-			.then(data => setUser(data))
-			.catch(error => console.log(error));
-	}, [])
-
-	console.log(user);
 
 	return (
 		<Page>

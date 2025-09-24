@@ -25,3 +25,8 @@ export const routes: Route[] = [
 	{path: '/orders/terms-of-reference', Component: LogisticsPage, title: 'Техническое задание'},
 	{path: '/theme-params', Component: ThemeParamsPage, title: 'Параметры темы'}
 ];
+
+export const adminRoutes: Route[] = [
+	...routes,
+	{path: '/admin', Component: IndexPage, title: "Панель администратора"},
+];
