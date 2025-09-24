@@ -16,9 +16,7 @@ export function App() {
 		login().then(data => setUser(data));
 	}, [])
 
-	if (!user) return (<h1>Loading...</h1>)
-
-	const routesType = user.role === 'admin' ? adminRoutes : routes;
+	const routesType = user?.role === 'admin' ? adminRoutes : routes;
 	return (
 		<AppRoot
 			appearance={isDark ? 'dark' : 'light'}
@@ -27,7 +25,7 @@ export function App() {
 			<BrowserRouter>
 				<Routes>
 					{routesType.map(({path, Component, children}) => (
-						<Route key={path} element={<Component/>}>
+						<Route key={path} path={path} element={<Component/>}>
 							{children?.map(({path, Component}) => (
 								<Route key={path} element={<Component/>}/>
 							))}
