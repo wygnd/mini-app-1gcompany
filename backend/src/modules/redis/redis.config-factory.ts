@@ -5,12 +5,17 @@ import {redisRetryStrategy} from "./redis.retry-strategy";
 
 export const redisOptions = (configService: ConfigService): RedisOptions => {
 	let totalRetryDuration = 0;
+	const redisConfig = configService.get<RedisOptions>('redis');
+
+	if(!redisConfig) throw new Error("Redis config doesn't exist");
+
+	const {host, port, username, password} = redisConfig;
 
 	return {
-		host: configService.get<string>('redis.host'),
-		port: configService.get<number>('redis.port') || 6379,
-		username: configService.get<string>('redis.username'),
-		password: configService.get<string>('redis.password'),
+		host,
+		port: port ? +port : 6379,
+		username: username,
+		password: password,
 		showFriendlyErrorStack: true,
 		lazyConnect: true,
 		commandTimeout: 1000,
@@ -20,5 +25,4 @@ export const redisOptions = (configService: ConfigService): RedisOptions => {
 			return delay;
 		},
 	}
-
 }
