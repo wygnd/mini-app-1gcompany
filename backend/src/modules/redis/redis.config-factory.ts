@@ -9,6 +9,7 @@ export const redisOptions = (configService: ConfigService): RedisOptions => {
 	return {
 		host: configService.get<string>('redis.host'),
 		port: configService.get<number>('redis.port') || 6379,
+		username: configService.get<string>('redis.username'),
 		password: configService.get<string>('redis.password'),
 		showFriendlyErrorStack: true,
 		lazyConnect: true,
