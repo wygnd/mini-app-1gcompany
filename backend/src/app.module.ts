@@ -1,28 +1,22 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import {ConfigModule} from "@nestjs/config";
-import databaseConfig from "./common/conifg/database.config";
-import constantsConfig from "./common/conifg/constants.config";
-import redisConfig from "./common/conifg/redis.config";
+import {Module} from '@nestjs/common';
+import {AppController} from './app.controller';
+import {AppService} from './app.service';
 import {UsersModule} from "./modules/users/users.module";
 import {OrdersModule} from "./modules/orders/orders.module";
 import {TelegramModule} from "./modules/telegram/telegram.module";
 import {APP_GUARD} from "@nestjs/core";
 import {TelegramAuthGuard} from "./modules/telegram/guards/telegram-auth.guard";
+import {RedisModule} from "./modules/redis/redis.module";
+import {ConfigAppModule} from "./config/config.module";
 
 @Module({
-  imports: [TelegramModule,
-		ConfigModule.forRoot({
-			isGlobal: true,
-			load: [databaseConfig, constantsConfig, redisConfig]
-		}), OrdersModule, UsersModule
-  ],
-  controllers: [AppController],
-  providers: [AppService,
-	  {
+	imports: [TelegramModule, ConfigAppModule, OrdersModule, UsersModule, RedisModule],
+	controllers: [AppController],
+	providers: [AppService,
+		{
 			provide: APP_GUARD,
-		  useValue: TelegramAuthGuard
-	  }],
+			useValue: TelegramAuthGuard
+		}],
 })
-export class AppModule {}
+export class AppModule {
+}

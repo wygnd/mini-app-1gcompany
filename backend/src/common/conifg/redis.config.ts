@@ -1,9 +1,10 @@
 import {RedisOptions} from "ioredis";
 
-export default (): {redis: RedisOptions} => ({
+
+export default (): { redis: RedisOptions } => ({
 	redis: {
 		host: process.env.REDIS_HOST,
 		port: process.env.REDIS_PORT ? +process.env.REDIS_PORT : 6379,
-		showFriendlyErrorStack: true
+		password: process.env.REDIS_PASSWORD,
 	}
 })

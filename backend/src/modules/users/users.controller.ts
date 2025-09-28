@@ -1,11 +1,11 @@
 import {
-	Body,
+	Body, ClassSerializerInterceptor,
 	Controller,
 	HttpStatus,
 	Patch,
 	Post,
 	Req,
-	UseGuards
+	UseGuards, UseInterceptors
 } from "@nestjs/common";
 import {UsersService} from "./users.service";
 import {ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
@@ -19,6 +19,7 @@ import {ApiAuthorizationHeaderDecorator} from "../../common/decorators/api-autho
 @ApiTags("Users")
 @ApiAuthorizationHeaderDecorator()
 @UseGuards(TelegramAuthGuard)
+@UseInterceptors(ClassSerializerInterceptor)
 @Controller('users')
 export class UsersController {
 	constructor(

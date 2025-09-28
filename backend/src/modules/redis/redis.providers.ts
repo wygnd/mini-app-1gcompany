@@ -1,16 +1,20 @@
 import {REDIS_CLIENT} from "./redis.constants";
 import {ConfigService} from "@nestjs/config";
-import Redis, {RedisOptions} from "ioredis";
+import Redis from "ioredis";
+import {redisOptions} from "./redis.config-factory";
 
 export const redisProviders = [
 	{
 		provide: REDIS_CLIENT,
 		useFactory: async (configService: ConfigService) => {
-			const config = configService.get<RedisOptions>('redis');
-
-			if(!config) throw new Error("Redis configuration doesn't exist");
-
-			return new Redis(config);
+			const client = new Redis(redisOptions(configService));
+			client.on("error", e => console.error(`REDIS: Error connecting: ${e}`));
+			try {
+				await client?.connect?.();
+			} catch (error) {
+				console.error(`REDIS: Failed to connect: ${error}`);
+			}
+			return client;
 		},
 		inject: [ConfigService]
 	}
