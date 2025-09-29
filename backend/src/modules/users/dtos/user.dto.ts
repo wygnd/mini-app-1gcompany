@@ -2,7 +2,7 @@ import {IUserAttributes, UserRoles} from "../interfaces/users.interface";
 import {ApiProperty} from "@nestjs/swagger";
 
 export class UserDto {
-	user: number;
+	id: number;
 	text: number;
 	role: UserRoles;
 	name?: string;

@@ -7,6 +7,8 @@ import {UserDto} from "./dtos/user.dto";
 import {RedisService} from "../redis/redis.service";
 import {REDIS_KEYS} from "../redis/redis.constants";
 
+const {user: REDIS_KEY_USER} = REDIS_KEYS;
+
 @Injectable()
 export class UsersService {
 	constructor(
@@ -17,7 +19,7 @@ export class UsersService {
 	}
 
 	public async findOrCreateUser(userData: TelegramUser) {
-		const cachedUser = this.redisService.get<UserDto>(REDIS_KEYS.user + userData.id);
+		const cachedUser = await this.redisService.get<UserDto>(REDIS_KEYS.user + userData.id);
 		console.log(`CHECK USER FROM CACHE: `, cachedUser); // debug
 
 		if (cachedUser) return cachedUser;
@@ -33,7 +35,10 @@ export class UsersService {
 			}
 		});
 
-		return new UserDto(user);
+		const userDto = new UserDto(user);
+		await this.redisService.set<UserDto>(REDIS_KEY_USER + userDto.id, userDto);
+
+		return userDto;
 	}
 
 
@@ -46,6 +51,10 @@ export class UsersService {
 
 		if (!userFromDB) throw new NotFoundException("User not found");
 
-		return await userFromDB.update({...userFields});
+		await userFromDB.update({...userFields});
+		const userDto = new UserDto(userFromDB);
+		await this.redisService.set<UserDto>(REDIS_KEY_USER + userId, userDto);
+
+		return userDto;
 	}
 }
