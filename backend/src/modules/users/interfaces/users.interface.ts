@@ -7,6 +7,7 @@ export interface IUserAttributes {
 	name?: string;
 	phone?: string;
 	organization?: string;
+	show_notifications: boolean;
 }
 
 export type IUserCreationAttributes = Optional<IUserAttributes, 'userId'>;

@@ -13,7 +13,7 @@ export class UserModel extends Model<IUserAttributes, IUserCreationAttributes> {
 		example: 1,
 		description: "unique user id"
 	})
-	userId: number;
+	declare userId: number;
 
 	@Column({type: DataType.BIGINT, unique: true, allowNull: false})
 	@ApiProperty({
@@ -21,7 +21,7 @@ export class UserModel extends Model<IUserAttributes, IUserCreationAttributes> {
 		type: Number,
 		example: 13223232323
 	})
-	telegramId: number;
+	declare telegramId: number;
 
 	@Column({type: DataType.ENUM(...Object.values(UserRoles)), defaultValue: UserRoles.USER})
 	@ApiProperty({
@@ -31,7 +31,7 @@ export class UserModel extends Model<IUserAttributes, IUserCreationAttributes> {
 		enum: UserRoles,
 		default: UserRoles.USER
 	})
-	role: UserRoles;
+	declare role: UserRoles;
 
 	@Column({type: DataType.STRING, allowNull: true})
 	@ApiProperty({
@@ -39,7 +39,7 @@ export class UserModel extends Model<IUserAttributes, IUserCreationAttributes> {
 		type: "string",
 		example: "Alex"
 	})
-	name: string;
+	declare name: string;
 
 	@Column({type: DataType.STRING, allowNull: true})
 	@ApiProperty({
@@ -47,7 +47,7 @@ export class UserModel extends Model<IUserAttributes, IUserCreationAttributes> {
 		type: "string",
 		example: "+79123257389"
 	})
-	phone: string;
+	declare phone: string;
 
 	@Column({type: DataType.STRING, allowNull: true})
 	@ApiProperty({
@@ -55,7 +55,7 @@ export class UserModel extends Model<IUserAttributes, IUserCreationAttributes> {
 		type: "string",
 		example: "OOO Company"
 	})
-	organization: string;
+	declare organization: string;
 
 	@Column({
 		type: DataType.BOOLEAN,
@@ -65,9 +65,9 @@ export class UserModel extends Model<IUserAttributes, IUserCreationAttributes> {
 	@ApiProperty({
 		description: "Will user see notifications",
 		type: Boolean,
-		example: false
+		example: true
 	})
-	show_notifications: boolean;
+	declare show_notifications: boolean;
 
 	@HasMany(() => OrdersModel)
 	orders: OrdersModel[]

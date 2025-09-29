@@ -6,6 +6,7 @@ import {UpdateUserDto} from "./dtos/update-user.dto";
 import {UserDto} from "./dtos/user.dto";
 import {RedisService} from "../redis/redis.service";
 import {REDIS_KEYS} from "../redis/redis.constants";
+import {plainToInstance} from "class-transformer";
 
 const {user: REDIS_KEY_USER} = REDIS_KEYS;
 
@@ -31,12 +32,13 @@ export class UsersService {
 			defaults: {
 				telegramId: userData.id,
 				name: userData.first_name,
-				role: UserRoles.USER
+				role: UserRoles.USER,
+				show_notifications: true
 			}
 		});
 
-		const userDto = new UserDto(user);
-		await this.redisService.set<UserDto>(REDIS_KEY_USER + userDto.id, userDto);
+		const userDto = this.toUserDto(user);
+		await this.redisService.set<UserDto>(REDIS_KEY_USER + userDto.userId, userDto, 28800);
 
 		return userDto;
 	}
@@ -52,9 +54,15 @@ export class UsersService {
 		if (!userFromDB) throw new NotFoundException("User not found");
 
 		await userFromDB.update({...userFields});
-		const userDto = new UserDto(userFromDB);
-		await this.redisService.set<UserDto>(REDIS_KEY_USER + userId, userDto);
+		const userDto = this.toUserDto(userFromDB);
+		await this.redisService.set<UserDto>(REDIS_KEY_USER + userDto.userId, userDto, 28800);
 
 		return userDto;
+	}
+
+	private toUserDto(user: UserModel) {
+		return plainToInstance(UserDto, user, {
+			excludeExtraneousValues: true
+		})
 	}
 }
