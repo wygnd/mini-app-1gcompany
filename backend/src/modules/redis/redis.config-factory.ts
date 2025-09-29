@@ -10,7 +10,7 @@ export const redisOptions = (configService: ConfigService): RedisOptions => {
 	if(!redisConfig) throw new Error("Redis config doesn't exist");
 
 	const {host, port, username, password} = redisConfig;
-
+	console.log(`Check redis config`, redisConfig);
 	return {
 		host,
 		port: port ? +port : 6379,
@@ -19,6 +19,7 @@ export const redisOptions = (configService: ConfigService): RedisOptions => {
 		showFriendlyErrorStack: true,
 		lazyConnect: true,
 		commandTimeout: 1000,
+		family: 0,
 		retryStrategy: (times) => {
 			const {delay, retryDuration} = redisRetryStrategy(times, totalRetryDuration);
 			totalRetryDuration = retryDuration;
