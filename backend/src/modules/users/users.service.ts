@@ -38,11 +38,10 @@ export class UsersService {
 		});
 
 		const userDto = this.toUserDto(user);
-		await this.redisService.set<UserDto>(REDIS_KEY_USER + userDto.userId, userDto, 28800);
+		await this.redisService.set<UserDto>(REDIS_KEY_USER + userDto.telegramId, userDto, 28800);
 
 		return userDto;
 	}
-
 
 	public async updateUser(userFields: UpdateUserDto, userId: number) {
 		const userFromDB = await this.userRepository.findOne({
@@ -55,7 +54,7 @@ export class UsersService {
 
 		await userFromDB.update({...userFields});
 		const userDto = this.toUserDto(userFromDB);
-		await this.redisService.set<UserDto>(REDIS_KEY_USER + userDto.userId, userDto, 28800);
+		await this.redisService.set<UserDto>(REDIS_KEY_USER + userDto.telegramId, userDto, 28800);
 
 		return userDto;
 	}
