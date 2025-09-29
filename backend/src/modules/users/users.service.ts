@@ -21,7 +21,6 @@ export class UsersService {
 
 	public async findOrCreateUser(userData: TelegramUser) {
 		const cachedUser = await this.redisService.get<UserDto>(REDIS_KEYS.user + userData.id);
-		console.log(`CHECK USER FROM CACHE: `, cachedUser); // debug
 
 		if (cachedUser) return cachedUser;
 

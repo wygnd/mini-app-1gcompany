@@ -1,6 +1,12 @@
+import {Optional} from "sequelize";
 
 
-export interface IRefundsAttributes {
+export interface IRefundAttributes {
 	refundId: number;
-	consumer: string;
+	organization: string;
+	address: string;
+	attachmentUrl: string;
+	countProduct: string;
 }
+
+export type IRefundCreationAttributes = Optional<IRefundAttributes, 'refundId'>;
