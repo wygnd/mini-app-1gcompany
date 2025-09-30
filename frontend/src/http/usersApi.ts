@@ -3,7 +3,7 @@ import {UserInterface} from "@/types/user.ts";
 
 export async function login() {
 	try {
-		const {data} = await $API.post<UserInterface>("/users/login");
+		const {data} = await $API.get<UserInterface>("/users/login");
 		return data;
 	} catch (error) {
 		throw error;

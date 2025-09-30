@@ -1,6 +1,6 @@
 import {
 	Body, ClassSerializerInterceptor,
-	Controller,
+	Controller, Get,
 	HttpStatus,
 	Patch,
 	Post,
@@ -28,7 +28,7 @@ export class UsersController {
 	@ApiOperation({summary: 'Try login user'})
 	@ApiResponse({status: HttpStatus.OK, description: 'User login response', type: UserModel})
 	@ApiExceptions()
-	@Post('/login')
+	@Get('/login')
 	async login(@Req() request: express.Request) {
 		try {
 			return await this.usersService.findOrCreateUser(request.user);
