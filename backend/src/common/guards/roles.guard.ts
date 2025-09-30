@@ -23,8 +23,6 @@ export class RolesGuard implements CanActivate {
 		const {user} = context.switchToHttp().getRequest();
 
 		if (!user) throw new UnauthorizedException('Invalid user data');
-		console.log('Check user role: ', user.role);
-		console.log('Check all get roles: ', requiredRoles);
 		if (!requiredRoles.includes(user.role)) throw new ForbiddenException();
 
 		return true;

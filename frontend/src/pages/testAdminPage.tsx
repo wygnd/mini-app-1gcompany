@@ -1,18 +1,10 @@
-import {FC, useEffect} from "react";
+import {FC} from "react";
 import {Page} from "@/components/Page.tsx";
 import {useUserStore} from "@/store/userStore.ts";
-import {getAdmin, getAll} from "@/http/usersApi.ts";
 
 export const TestAdminPage: FC = () => {
 
 	const {user} = useUserStore();
-
-	useEffect(() => {
-		(async () => {
-			await getAll()
-			await getAdmin()
-		})()
-	}, []);
 
 	return (
 		<Page>

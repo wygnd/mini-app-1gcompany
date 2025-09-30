@@ -5,7 +5,7 @@ import {AppRoot} from '@telegram-apps/telegram-ui';
 
 import {adminRoutes, routes} from '@/navigation/routes.tsx';
 import {useUserStore} from "@/store/userStore.ts";
-import {login} from "@/http/usersApi.ts";
+import {getAdmin, getAll, login} from "@/http/usersApi.ts";
 
 export function App() {
 	const lp = useMemo(() => retrieveLaunchParams(), []);
@@ -14,6 +14,11 @@ export function App() {
 
 	useEffect(() => {
 		login().then(data => setUser(data));
+
+		(async () => {
+			await getAll()
+			await getAdmin()
+		})()
 	}, [])
 
 	const routesType = user?.role === "admin" ? adminRoutes : routes;
