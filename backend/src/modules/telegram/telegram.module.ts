@@ -5,8 +5,8 @@ import {telegramProviders} from "./telegram.providers";
 
 @Global()
 @Module({
-	providers: [TelegramAuthService],
-	exports: [TelegramAuthService, ...telegramProviders],
+	providers: [...telegramProviders, TelegramAuthService],
+	exports: [TelegramAuthService],
 })
 export class TelegramModule {
 }
