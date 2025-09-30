@@ -1,21 +1,32 @@
-import {Controller, Get, NotFoundException, UseGuards} from '@nestjs/common';
+import {Controller, Get, HttpStatus, Req, UseGuards} from '@nestjs/common';
 import {AppService} from './app.service';
 import {ApiExcludeController} from "@nestjs/swagger";
-import {TelegramAuthGuard} from "./modules/telegram/guards/telegram-auth.guard";
 import {RolesGuard} from "./common/guards/roles.guard";
+import * as express from 'express';
+import {Roles} from "./common/decorators/roles.decorator";
+import {UserRoles} from "./modules/users/interfaces/users.interface";
 
-@UseGuards(TelegramAuthGuard, RolesGuard)
 @ApiExcludeController()
+@UseGuards(RolesGuard)
 @Controller()
 export class AppController {
 	constructor(private readonly appService: AppService) {
 	}
 
 	@Get('/test')
-	testForAllUsers() {
+	testForAllUsers(@Req() request: express.Request) {
+		return {
+			status: HttpStatus.OK,
+			message: "Welcome in endpoint for all users"
+		}
 	}
 
+	@Roles(UserRoles.ADMIN)
 	@Get('/test-admin')
-	testForAdmins() {
+	testForAdmins(@Req() request: express.Request) {
+		return {
+			status: HttpStatus.OK,
+			message: "Welcome in endpoint for admin users"
+		}
 	}
 }

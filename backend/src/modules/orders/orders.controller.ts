@@ -12,7 +12,6 @@ import {OrdersService} from "./orders.service";
 import {UserRoles} from "../users/interfaces/users.interface";
 import {Roles} from "../../common/decorators/roles.decorator";
 import {RolesGuard} from "../../common/guards/roles.guard";
-import type {CustomRequest} from "../../common/interfaces/custom-request.interface";
 import {CreateOrderDto} from "./dtos/create-order.dto";
 import {UpdateOrderFields} from "./dtos/update-order.fields";
 import {ApiExtraModels, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
@@ -22,6 +21,7 @@ import {ApiAuthorizationHeaderDecorator} from "../../common/decorators/api-autho
 import {PaginatedResponseDto} from "../../common/dto/paginated-response.dto";
 import {ApiPaginatedResponse} from "../../common/decorators/api-paginated-response.decorator";
 import {OrdersPaginationDto} from "./dtos/pagination.dto";
+import * as express from 'express';
 
 @ApiExtraModels(OrdersModel, PaginatedResponseDto)
 @ApiTags('Orders')
@@ -41,7 +41,7 @@ export class OrdersController {
 	})
 	@ApiExceptions()
 	@Get("/private")
-	async getUserOrders(@Query() queryParams: OrdersPaginationDto, @Req() request: CustomRequest) {
+	async getUserOrders(@Query() queryParams: OrdersPaginationDto, @Req() request: express.Request) {
 		try {
 			return await this.ordersService.getOrdersByUserId(request.user.id, queryParams);
 		} catch (error) {
@@ -78,7 +78,7 @@ export class OrdersController {
 	@ApiResponse({status: HttpStatus.CREATED, description: 'Success', type: OrdersModel})
 	@ApiExceptions()
 	@Post("/create")
-	async createOrder(@Body() createOrderFields: CreateOrderDto, @Req() request: CustomRequest) {
+	async createOrder(@Body() createOrderFields: CreateOrderDto, @Req() request: express.Request) {
 		try {
 			return await this.ordersService.createOrder(createOrderFields, request.user.id);
 		} catch(error) {
@@ -91,7 +91,7 @@ export class OrdersController {
 	@ApiExceptions()
 	@Roles(UserRoles.ADMIN)
 	@Patch("/update")
-	async updateOrder(@Body() updateOrderFields: UpdateOrderFields, @Req() request: CustomRequest) {
+	async updateOrder(@Body() updateOrderFields: UpdateOrderFields, @Req() request: express.Request) {
 		try {
 			return await this.ordersService.updateOrder(updateOrderFields, request.user.id);
 		} catch(error) {

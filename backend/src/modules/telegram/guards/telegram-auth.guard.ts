@@ -1,8 +1,8 @@
 import {CanActivate, ExecutionContext, Injectable, UnauthorizedException} from "@nestjs/common";
 import {TelegramAuthService} from "../telegram-auth.service";
-import {CustomRequest} from "../../../common/interfaces/custom-request.interface";
 import {Reflector} from "@nestjs/core";
 import {IS_PUBLIC_KEY} from "../../../common/decorators/public.decorator";
+import * as express from 'express';
 
 @Injectable()
 export class TelegramAuthGuard implements CanActivate {
@@ -20,10 +20,10 @@ export class TelegramAuthGuard implements CanActivate {
 
 		if (isPublic) return true;
 
-		const request = context.switchToHttp().getRequest<CustomRequest>();
+		const request = context.switchToHttp().getRequest<express.Request>();
 		const [authType, initData] = (request.headers['authorization'] || "").split(' ');
 		if (authType !== 'tma') throw new UnauthorizedException('Authorization required');
-		console.log("Check working guard", authType, initData);
+
 		if (!initData) throw new UnauthorizedException("Invalid init data");
 
 		const [user, error] = this.telegramService.validateData(initData);
