@@ -33,7 +33,7 @@ export function App() {
 					{routesType.map(({path, Component, children}) => (
 						<Route key={path} path={path} element={<Component/>}>
 							{children?.map(({path, Component}) => (
-								<Route key={path} element={<Component/>}/>
+								<Route key={path} path={path} element={<Component/>}/>
 							))}
 						</Route>
 					))}

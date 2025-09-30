@@ -6,6 +6,7 @@ import {LogisticsPage} from "@/pages/Logistics/Logistics.tsx";
 import {PolicyPage} from "@/pages/CollaborationsPage/PolicyPage.tsx";
 import {ThemeParamsPage} from "@/pages/ThemeParamsPage.tsx";
 import {TestAdminPage} from "@/pages/testAdminPage.tsx";
+import {RefundOrdersPage} from "@/pages/RefundOrdersPage/RefundOrdersPage.tsx";
 
 interface Route {
 	path: string;
@@ -21,14 +22,14 @@ export const routes: Route[] = [
 	{path: '/policy', Component: PolicyPage, title: 'Условия сотрудничества'},
 	{
 		path: '/logistics', Component: LogisticsPage, title: 'Логистика', children: [
-			{path: '/orders', Component: LogisticsPage, title: 'Заказы на забор груза'},
-			{path: '/orders-package', Component: LogisticsPage, title: 'Заказы на отправку посылок'},
-			{path: '/orders-return', Component: LogisticsPage, title: 'Заказы на забор возвратов'},
+			{path: 'orders', Component: LogisticsPage, title: 'Заказы на забор груза'},
+			{path: 'orders-package', Component: LogisticsPage, title: 'Заказы на отправку посылок'},
+			{path: 'orders-return', Component: RefundOrdersPage, title: 'Заказы на забор возвратов'},
 		]
 	},
 	{
 		path: '/orders', Component: LogisticsPage, title: 'Обработка товара', children: [
-			{path: '/terms-of-reference', Component: LogisticsPage, title: 'Техническое задание'},
+			{path: 'terms-of-reference', Component: LogisticsPage, title: 'Техническое задание'},
 		]
 	},
 	{path: '/theme-params', Component: ThemeParamsPage, title: 'Параметры темы'}
