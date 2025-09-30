@@ -17,7 +17,7 @@ export class TelegramAuthGuard implements CanActivate {
 			context.getHandler(),
 			context.getClass()
 		]);
-
+		console.log(isPublic);
 		if (isPublic) return true;
 
 		const request = context.switchToHttp().getRequest<express.Request>();

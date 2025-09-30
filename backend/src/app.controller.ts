@@ -5,6 +5,7 @@ import {RolesGuard} from "./common/guards/roles.guard";
 import * as express from 'express';
 import {Roles} from "./common/decorators/roles.decorator";
 import {UserRoles} from "./modules/users/interfaces/users.interface";
+import {Public} from "./common/decorators/public.decorator";
 
 @ApiExcludeController()
 @UseGuards(RolesGuard)
@@ -13,8 +14,9 @@ export class AppController {
 	constructor(private readonly appService: AppService) {
 	}
 
+	@Public()
 	@Get('/test')
-	testForAllUsers(@Req() request: express.Request) {
+	testForAllUsers() {
 		return {
 			status: HttpStatus.OK,
 			message: "Welcome in endpoint for all users"
