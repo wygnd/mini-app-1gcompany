@@ -19,26 +19,26 @@ export class TelegramAuthService {
 		this.telegramToken = configService.get<string>("telegramToken") ?? "";
 	}
 
-	public validateData(initData: string): [null | TelegramUser, string] {
+	public validateData(initData: string): TelegramUser | null {
 		try {
 			validate(initData, this.telegramToken);
-			return [this.parseData(initData), ""];
+			return this.parseData(initData);
 		} catch (error) {
 			switch (true) {
 				case error instanceof SignatureInvalidError:
-					return [null, "Signature is invalid"];
+					throw new UnauthorizedException("Signature is invalid")
 
 					case error instanceof AuthDateInvalidError:
-						return [null, "Auth date is empty or not found"];
+						throw new UnauthorizedException("Auth date is empty or not found")
 
 					case error instanceof SignatureMissingError:
-						return [null, "Hash is empty or not found"];
+						throw new UnauthorizedException("Hash is empty or not found")
 
 					case error instanceof ExpiredError:
-						return [null, "Init data expired"];
+						throw new UnauthorizedException("Init data expired")
 
 				default:
-					return [null, "Something wrong"];
+					throw new UnauthorizedException("Something wrong")
 			}
 		}
 	}

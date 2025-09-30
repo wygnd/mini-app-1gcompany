@@ -1,3 +1,5 @@
+import {UserRoles} from "../../users/interfaces/users.interface";
+
 export interface TelegramUser {
 	added_to_attachment_menu?: boolean | undefined;
 	allows_write_to_pm?: boolean | undefined;
@@ -9,4 +11,8 @@ export interface TelegramUser {
 	language_code?: string | undefined;
 	photo_url?: string | undefined;
 	username?: string | undefined;
+}
+
+export interface TelegramUserExtended extends TelegramUser {
+	role: UserRoles
 }

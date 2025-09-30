@@ -1,14 +1,18 @@
-import {CanActivate, ExecutionContext, Injectable, UnauthorizedException} from "@nestjs/common";
+import {CanActivate, ExecutionContext, Injectable, Logger, LoggerService, UnauthorizedException} from "@nestjs/common";
 import {TelegramAuthService} from "../telegram-auth.service";
 import {Reflector} from "@nestjs/core";
 import {IS_PUBLIC_KEY} from "../../../common/decorators/public.decorator";
 import * as express from 'express';
+import {UsersService} from "../../users/users.service";
 
 @Injectable()
 export class TelegramAuthGuard implements CanActivate {
+	private readonly logger = new Logger(TelegramAuthGuard.name, {timestamp: true});
+
 	constructor(
 		private readonly reflector: Reflector,
-		private readonly telegramService: TelegramAuthService
+		private readonly telegramService: TelegramAuthService,
+		private readonly usersService: UsersService,
 	) {
 	}
 
@@ -17,20 +21,31 @@ export class TelegramAuthGuard implements CanActivate {
 			context.getHandler(),
 			context.getClass()
 		]);
-		console.log(isPublic);
+
 		if (isPublic) return true;
 
 		const request = context.switchToHttp().getRequest<express.Request>();
 		const [authType, initData] = (request.headers['authorization'] || "").split(' ');
-		if (authType !== 'tma') throw new UnauthorizedException('Authorization required');
+		if (authType !== 'tma') {
+			this.logger.error('Invalid auth');
+			throw new UnauthorizedException('Authorization required');
+		}
 
-		if (!initData) throw new UnauthorizedException("Invalid init data");
+		if (!initData) {
+			this.logger.error('Invalid init data');
+			throw new UnauthorizedException("Invalid init data");
+		}
 
-		const [user, error] = this.telegramService.validateData(initData);
+		const user = this.telegramService.validateData(initData);
 
-		if (!user) throw new UnauthorizedException(error);
+		if (!user) {
+			this.logger.error('Error initialize user');
+			throw new UnauthorizedException();
+		}
 
-		request.user = user;
+		const userDto = await this.usersService.findOrCreateUser(user);
+
+		request.user = {...user, role: userDto.role};
 		return true;
 	}
 }
