@@ -22,28 +22,29 @@ import {ApiAuthorizationHeaderDecorator} from "../../common/decorators/api-autho
 export class UsersController {
 	constructor(
 		private readonly usersService: UsersService
-	) {}
+	) {
+	}
 
-	@ApiOperation({ summary: 'Try login user' })
+	@ApiOperation({summary: 'Try login user'})
 	@ApiResponse({status: HttpStatus.OK, description: 'User login response', type: UserModel})
 	@ApiExceptions()
 	@Post('/login')
 	async login(@Req() request: CustomRequest) {
 		try {
 			return await this.usersService.findOrCreateUser(request.user);
-		} catch(error) {
+		} catch (error) {
 			throw error;
 		}
 	}
 
-	@ApiOperation({ summary: 'Update user info' })
+	@ApiOperation({summary: 'Update user info'})
 	@ApiResponse({status: HttpStatus.OK, description: 'User update response', type: UserModel})
 	@ApiExceptions()
 	@Patch('/update')
 	async updateUser(@Body() userFields: UpdateUserDto, @Req() request: CustomRequest) {
 		try {
 			return await this.usersService.updateUser(userFields, request.user.id);
-		} catch(error) {
+		} catch (error) {
 			throw error;
 		}
 	}
