@@ -1,39 +1,43 @@
-import {IsNotEmpty, IsString} from "class-validator";
 import {ApiProperty} from "@nestjs/swagger";
+import {IsOptional, IsString} from "class-validator";
 
-export class CreateRefundDto {
+export class UpdateRefundDto {
 	@ApiProperty({
 		type: String,
 		example: "OOO \"COMPANY NAME\"",
-		description: "Company"
+		description: "Company",
+		required: false
 	})
-	@IsNotEmpty()
+	@IsOptional()
 	@IsString()
 	organization: string;
 
 	@ApiProperty({
 		type: String,
 		example: "Gogolya street",
-		description: "Address"
+		description: "Address",
+		required: false
 	})
-	@IsNotEmpty()
+	@IsOptional()
 	@IsString()
 	address: string;
 
 	@ApiProperty({
 		type: String,
-		description: "Image url"
+		description: "Image url",
+		required: false
 	})
-	@IsNotEmpty()
+	@IsOptional()
 	@IsString()
 	attachmentUrl: string;
 
 	@ApiProperty({
 		type: String,
 		example: "10 boxes",
-		description: "Count product"
+		description: "Count product",
+		required: false
 	})
-	@IsNotEmpty()
+	@IsOptional()
 	@IsString()
 	countProduct: string;
 }

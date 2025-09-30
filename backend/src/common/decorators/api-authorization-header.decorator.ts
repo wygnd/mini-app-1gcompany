@@ -4,7 +4,8 @@ import {ApiHeader} from "@nestjs/swagger";
 export const ApiAuthorizationHeaderDecorator = () => {
 	return applyDecorators(
 		ApiHeader({
-			name: "telegram-api-init-data",
+			name: "Authorization",
+			example: "Authorization: tma token",
 			description: "API authorization header",
 			required: true,
 		})

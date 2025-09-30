@@ -37,7 +37,7 @@ export class UsersService {
 		});
 
 		const userDto = this.toUserDto(user);
-		await this.redisService.set<UserDto>(REDIS_KEY_USER + userDto.telegramId, userDto, 28800);
+		await this.redisService.set<UserDto>(REDIS_KEY_USER + userDto.telegramId, userDto, 86400);
 
 		return userDto;
 	}
@@ -53,7 +53,7 @@ export class UsersService {
 
 		await userFromDB.update({...userFields});
 		const userDto = this.toUserDto(userFromDB);
-		await this.redisService.set<UserDto>(REDIS_KEY_USER + userDto.telegramId, userDto, 28800);
+		await this.redisService.set<UserDto>(REDIS_KEY_USER + userDto.telegramId, userDto, 86400);
 
 		return userDto;
 	}

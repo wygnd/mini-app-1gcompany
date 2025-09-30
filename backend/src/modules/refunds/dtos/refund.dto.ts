@@ -1,7 +1,14 @@
-import {IsNotEmpty, IsString} from "class-validator";
 import {ApiProperty} from "@nestjs/swagger";
+import {IsNotEmpty, IsString} from "class-validator";
 
-export class CreateRefundDto {
+export class RefundDto {
+	@ApiProperty({
+		type: Number,
+		example: 1,
+		description: "Unique entity identifier"
+	})
+	refundId: number;
+
 	@ApiProperty({
 		type: String,
 		example: "OOO \"COMPANY NAME\"",

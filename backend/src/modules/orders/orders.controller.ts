@@ -11,7 +11,6 @@ import {
 import {OrdersService} from "./orders.service";
 import {UserRoles} from "../users/interfaces/users.interface";
 import {Roles} from "../../common/decorators/roles.decorator";
-import {TelegramAuthGuard} from "../telegram/guards/telegram-auth.guard";
 import {RolesGuard} from "../../common/guards/roles.guard";
 import type {CustomRequest} from "../../common/interfaces/custom-request.interface";
 import {CreateOrderDto} from "./dtos/create-order.dto";
@@ -27,7 +26,7 @@ import {OrdersPaginationDto} from "./dtos/pagination.dto";
 @ApiExtraModels(OrdersModel, PaginatedResponseDto)
 @ApiTags('Orders')
 @ApiAuthorizationHeaderDecorator()
-@UseGuards(TelegramAuthGuard, RolesGuard)
+@UseGuards(RolesGuard)
 @Controller('orders')
 export class OrdersController {
 	constructor(

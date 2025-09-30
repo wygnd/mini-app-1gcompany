@@ -114,6 +114,31 @@ export class OrdersModel extends Model<IOrderAttributes, IOrderCreationAttribute
 	@Column({type: DataType.ENUM(...Object.values(OrdersStatus)), allowNull: false, defaultValue: OrdersStatus.WAITING_PICKUP})
 	status: OrdersStatus;
 
+	@ApiProperty({
+		name: "Confirm order",
+		type: Boolean,
+		example: false,
+		default: false
+	})
+	@Column({
+		type: DataType.BOOLEAN,
+		defaultValue: false,
+		allowNull: false,
+	})
+	isConfirm: boolean;
+
+	@ApiProperty({
+		type: DataType.STRING,
+		example: JSON.stringify({comment: "test comment"}),
+		description: "Any data for order"
+	})
+	@Column({
+		type: DataType.TEXT('long'),
+		defaultValue: '',
+		allowNull: false,
+	})
+	params: string;
+
 	@ForeignKey(() => UserModel)
 	@Column({type: DataType.INTEGER, allowNull: false, field: "user_id"})
 	userId: number;

@@ -6,6 +6,11 @@ import {ApiProperty} from "@nestjs/swagger";
 	tableName: "returns"
 })
 export class RefundsModel extends Model<IRefundAttributes, IRefundCreationAttributes> {
+	@ApiProperty({
+		type: Number,
+		example: 1,
+		description: "Unique refund identifier"
+	})
 	@Column({
 		type: DataType.INTEGER,
 		unique: true,
@@ -13,53 +18,48 @@ export class RefundsModel extends Model<IRefundAttributes, IRefundCreationAttrib
 		autoIncrement: true,
 		primaryKey: true,
 	})
-	@ApiProperty({
-		type: Number,
-		example: 1,
-		description: "Unique refund identifier"
-	})
 	declare refundId: number;
 
-	@Column({
-		type: DataType.STRING,
-		allowNull: false
-	})
 	@ApiProperty({
 		type: String,
 		example: "OOO \"COMPANY NAME\"",
 		description: "Company"
 	})
-	declare organization: string;
-
 	@Column({
 		type: DataType.STRING,
 		allowNull: false
 	})
+	declare organization: string;
+
 	@ApiProperty({
 		type: String,
 		example: "Gogolya street",
 		description: "Address"
 	})
-	declare address: string;
-
 	@Column({
 		type: DataType.STRING,
 		allowNull: false
 	})
+	declare address: string;
+
 	@ApiProperty({
 		type: String,
 		description: "Image url"
 	})
-	declare attachmentUrl: string;
-
 	@Column({
 		type: DataType.STRING,
 		allowNull: false
 	})
+	declare attachmentUrl: string;
+
 	@ApiProperty({
 		type: String,
 		example: "10 boxes",
 		description: "Count product"
+	})
+	@Column({
+		type: DataType.STRING,
+		allowNull: false
 	})
 	declare countProduct: string;
 }

@@ -5,11 +5,10 @@ import {
 	Patch,
 	Post,
 	Req,
-	UseGuards, UseInterceptors
+	UseInterceptors
 } from "@nestjs/common";
 import {UsersService} from "./users.service";
 import {ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
-import {TelegramAuthGuard} from "../telegram/guards/telegram-auth.guard";
 import {UpdateUserDto} from "./dtos/update-user.dto";
 import type {CustomRequest} from "../../common/interfaces/custom-request.interface";
 import {UserModel} from "./entities/users.entity";
@@ -18,7 +17,6 @@ import {ApiAuthorizationHeaderDecorator} from "../../common/decorators/api-autho
 
 @ApiTags("Users")
 @ApiAuthorizationHeaderDecorator()
-@UseGuards(TelegramAuthGuard)
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller('users')
 export class UsersController {
