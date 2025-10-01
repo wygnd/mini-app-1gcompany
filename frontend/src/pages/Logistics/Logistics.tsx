@@ -1,34 +1,40 @@
 import {FC} from "react";
 import {Page} from "@/components/Page.tsx";
 import {Button, InlineButtons, Section} from "@telegram-apps/telegram-ui";
-import {Outlet, useLocation} from "react-router-dom";
-import {routes} from "@/navigation/routes.tsx";
-import {Link} from "@/components/Link/Link.tsx";
+import {NavLink, Outlet, useLocation} from "react-router-dom";
+import {useCurrentPath} from "@/hooks/useCurrentPath.ts";
 
 export const LogisticsPage: FC = () => {
 
-	const {pathname} = useLocation();
+	const location = useLocation();
+	const path = useCurrentPath();
 
-	const targetRoute = routes.find(route => route.path === pathname);
+	if (!path) return;
 
-	const subRoutes = targetRoute?.children ?? [];
+	const activePath = location.pathname.replace(path.pathname + '/', '');
+	const {children: subRoutes} = path.route;
 
 	return (
-		<Page>
-			<Section header="Логистика">
-				{subRoutes.length !== 0 &&
-					<InlineButtons>
-						{subRoutes.map(({path, title}) =>
-							<Link key={path} to={path}>
-								<Button mode="outline" size="s">
-									{title}
-								</Button>
-							</Link>
-						)}
-					</InlineButtons>
-				}
-			</Section>
-			<Outlet/>
-		</Page>
+		<>
+			<Page>
+				<Section header="Логистика">
+					{subRoutes &&
+						<InlineButtons>
+							{subRoutes.map(({path, handle}) =>
+								<NavLink key={path} to={`${path}`}>
+									<Button
+										mode={activePath === path ? "bezeled" : "outline"}
+										size="s"
+									>
+										{handle.title}
+									</Button>
+								</NavLink>
+							)}
+						</InlineButtons>
+					}
+					<Outlet/>
+				</Section>
+			</Page>
+		</>
 	)
 }

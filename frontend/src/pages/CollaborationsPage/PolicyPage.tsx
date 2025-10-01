@@ -1,7 +1,7 @@
 import {FC} from "react";
 import {Page} from "@/components/Page.tsx";
 import {useSignal, initDataRaw as _initDataRaw} from "@telegram-apps/sdk-react";
-import {useUserStore} from "@/store/userStore.ts";
+import {useUserStore} from "@/features/users/store/userStore.ts";
 
 export const PolicyPage: FC = () => {
 	const initDataRaw = useSignal(_initDataRaw);

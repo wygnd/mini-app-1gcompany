@@ -1,6 +1,6 @@
 import {FC} from "react";
 import {Page} from "@/components/Page.tsx";
-import {useUserStore} from "@/store/userStore.ts";
+import {useUserStore} from "@/features/users/store/userStore.ts";
 
 export const TestAdminPage: FC = () => {
 

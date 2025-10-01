@@ -3,6 +3,8 @@ import {FC} from "react";
 
 export const RefundOrdersPage: FC = () => {
 	return (
-		<Title>Заказы на забор возвратов</Title>
+		<>
+			<Title>Заказы на забор возвратов</Title>
+		</>
 	)
 }
