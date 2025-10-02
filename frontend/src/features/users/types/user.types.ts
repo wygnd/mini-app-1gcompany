@@ -8,3 +8,9 @@ export interface UserInterface {
 	show_notifications: boolean;
 	role: "user" | "admin";
 }
+
+export interface UserStore {
+	user: UserInterface | null;
+	setUser: (user: UserInterface | null) => void;
+	isAdmin: () => boolean;
+}

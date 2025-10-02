@@ -1,5 +1,5 @@
 import {ApiProperty} from "@nestjs/swagger";
-import {IsNotEmpty, IsString} from "class-validator";
+import {IsNotEmpty, IsNumber, IsString} from "class-validator";
 
 export class RefundDto {
 	@ApiProperty({
@@ -43,4 +43,8 @@ export class RefundDto {
 	@IsNotEmpty()
 	@IsString()
 	countProduct: string;
+
+	@IsNotEmpty()
+	@IsNumber()
+	userId: number;
 }

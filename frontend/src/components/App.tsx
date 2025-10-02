@@ -5,7 +5,7 @@ import {AppRoot} from '@telegram-apps/telegram-ui';
 
 import {router, adminRouter} from '@/navigation/routes.tsx';
 import {useUserStore} from "@/features/users/store/userStore.ts";
-import {getAdmin, getAll, login} from "@/http/usersApi.ts";
+import {getAdmin, getAll, login} from "@/features/users/api/usersApi.ts";
 
 export function App() {
 	const lp = useMemo(() => retrieveLaunchParams(), []);

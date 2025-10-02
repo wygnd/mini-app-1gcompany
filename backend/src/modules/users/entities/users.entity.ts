@@ -2,6 +2,7 @@ import {Column, DataType, Table, Model, HasMany} from "sequelize-typescript";
 import {IUserAttributes, IUserCreationAttributes, UserRoles} from "../interfaces/users.interface";
 import {ApiProperty} from "@nestjs/swagger";
 import {OrdersModel} from "../../orders/enitites/orders.entity";
+import {RefundsModel} from "../../refunds/entities/refunds.entity";
 
 @Table({tableName: "users"})
 export class UserModel extends Model<IUserAttributes, IUserCreationAttributes> {
@@ -70,5 +71,8 @@ export class UserModel extends Model<IUserAttributes, IUserCreationAttributes> {
 	declare show_notifications: boolean;
 
 	@HasMany(() => OrdersModel)
-	orders: OrdersModel[]
+	orders: OrdersModel[];
+
+	@HasMany(() => RefundsModel)
+	refunds: RefundsModel[];
 }

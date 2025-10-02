@@ -1,6 +1,7 @@
-import {Column, DataType, Model, Table} from "sequelize-typescript";
+import {BelongsTo, Column, DataType, ForeignKey, HasOne, Model, Table} from "sequelize-typescript";
 import {IRefundAttributes, IRefundCreationAttributes} from "../interfaces/refunds.interface";
 import {ApiProperty} from "@nestjs/swagger";
+import {UserModel} from "../../users/entities/users.entity";
 
 @Table({
 	tableName: "returns"
@@ -19,6 +20,11 @@ export class RefundsModel extends Model<IRefundAttributes, IRefundCreationAttrib
 		primaryKey: true,
 	})
 	declare refundId: number;
+
+	@BelongsTo(() => UserModel)
+	@ForeignKey(() => UserModel)
+	@Column({type: DataType.INTEGER, allowNull: false})
+	declare userId: number;
 
 	@ApiProperty({
 		type: String,

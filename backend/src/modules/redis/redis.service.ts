@@ -19,7 +19,7 @@ export class RedisService {
 		return data ? (JSON.parse(data) as T) : null;
 	}
 
-	del(key: string) {
-		return this.redisClient.del(key);
+	async del(key: string) {
+		return await this.redisClient.del(key);
 	}
 }
