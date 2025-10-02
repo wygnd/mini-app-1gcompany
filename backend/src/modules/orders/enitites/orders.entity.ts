@@ -20,6 +20,13 @@ export class OrdersModel extends Model<IOrderAttributes, IOrderCreationAttribute
 	})
 	orderId: number;
 
+	@ForeignKey(() => UserModel)
+	@Column({type: DataType.INTEGER, allowNull: false, field: "user_id"})
+	userId: number;
+
+	@BelongsTo(() => UserModel)
+	user: UserModel;
+
 	@ApiProperty({
 		name: "Date of pick",
 		type: Number,
@@ -111,7 +118,11 @@ export class OrdersModel extends Model<IOrderAttributes, IOrderCreationAttribute
 		example: OrdersStatus.PENDING,
 		default: OrdersStatus.WAITING_PICKUP
 	})
-	@Column({type: DataType.ENUM(...Object.values(OrdersStatus)), allowNull: false, defaultValue: OrdersStatus.WAITING_PICKUP})
+	@Column({
+		type: DataType.ENUM(...Object.values(OrdersStatus)),
+		allowNull: false,
+		defaultValue: OrdersStatus.WAITING_PICKUP
+	})
 	status: OrdersStatus;
 
 	@ApiProperty({
@@ -138,11 +149,4 @@ export class OrdersModel extends Model<IOrderAttributes, IOrderCreationAttribute
 		allowNull: false,
 	})
 	params: string;
-
-	@ForeignKey(() => UserModel)
-	@Column({type: DataType.INTEGER, allowNull: false, field: "user_id"})
-	userId: number;
-
-	@BelongsTo(() => UserModel)
-	user: UserModel;
 }

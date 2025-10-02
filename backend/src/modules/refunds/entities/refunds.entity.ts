@@ -21,10 +21,12 @@ export class RefundsModel extends Model<IRefundAttributes, IRefundCreationAttrib
 	})
 	declare refundId: number;
 
-	@BelongsTo(() => UserModel)
 	@ForeignKey(() => UserModel)
-	@Column({type: DataType.INTEGER, allowNull: false})
+	@Column({type: DataType.INTEGER, allowNull: false, field: "user_id"})
 	declare userId: number;
+
+	@BelongsTo(() => UserModel)
+	declare user: UserModel;
 
 	@ApiProperty({
 		type: String,
