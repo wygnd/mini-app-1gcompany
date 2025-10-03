@@ -1,5 +1,5 @@
 import {$API} from "@/http";
-import {UserInterface} from "@/features/users/types/user.types.ts";
+import {UserInterface} from "@/features/users/types/user.ts";
 
 export async function login() {
 	try {

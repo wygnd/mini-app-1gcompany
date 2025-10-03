@@ -1,5 +1,5 @@
 import {create} from "zustand";
-import {UserStore} from "@/features/users/types/user.types.ts";
+import {UserStore} from "@/features/users/types/user.ts";
 
 export const useUserStore = create<UserStore>((set, get) => ({
 	user: null,

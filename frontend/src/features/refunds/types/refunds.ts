@@ -1,5 +1,6 @@
 export interface RefundInterface {
 	refundId: number;
+	title: string;
 	organization: string;
 	address: string;
 	attachmentUrl: string;
