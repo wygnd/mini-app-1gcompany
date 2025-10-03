@@ -4,9 +4,9 @@ import {CreateRefund} from "@/features/refunds/components/CreateRefund/CreateRef
 
 export const RefundOrdersPage: FC = () => {
 	return (
-		<>
+		<div className='p-10'>
 			<Title>Заказы на забор возвратов</Title>
 			<CreateRefund />
-		</>
+		</div>
 	)
 }

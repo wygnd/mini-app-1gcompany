@@ -1,6 +1,6 @@
 import {IndexPage} from '@/pages/IndexPage/IndexPage';
 import {InitDataPage} from '@/pages/InitDataPage.tsx';
-import {LogisticsPage} from "@/pages/Logistics/Logistics.tsx";
+import {LogisticsPage} from "@/pages/LogisticsPage/LogisticsPage.tsx";
 import {PolicyPage} from "@/pages/CollaborationsPage/PolicyPage.tsx";
 import {ThemeParamsPage} from "@/pages/ThemeParamsPage.tsx";
 import {TestAdminPage} from "@/pages/testAdminPage.tsx";

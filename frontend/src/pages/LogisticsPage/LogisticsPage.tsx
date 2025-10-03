@@ -1,8 +1,11 @@
 import {FC} from "react";
 import {Page} from "@/components/Page.tsx";
-import {Button, InlineButtons, Section} from "@telegram-apps/telegram-ui";
+import {Section, TabsList} from "@telegram-apps/telegram-ui";
 import {NavLink, Outlet, useLocation} from "react-router-dom";
 import {useCurrentPath} from "@/hooks/useCurrentPath.ts";
+import {TabsItem} from "@telegram-apps/telegram-ui/dist/components/Navigation/TabsList/components/TabsItem/TabsItem";
+import styles from './LogisticsPage.module.css';
+import {classNames} from "@/css/classnames.ts";
 
 export const LogisticsPage: FC = () => {
 
@@ -17,20 +20,19 @@ export const LogisticsPage: FC = () => {
 	return (
 		<>
 			<Page>
-				<Section header="Логистика">
+				<Section header="Логистика" className="p-2">
 					{subRoutes &&
-						<InlineButtons>
+						<TabsList className={classNames(styles.wrapper, "p-2")}>
 							{subRoutes.map(({path, handle}) =>
 								<NavLink key={path} to={`${path}`}>
-									<Button
-										mode={activePath === path ? "bezeled" : "outline"}
-										size="s"
+									<TabsItem
+										selected={activePath === path}
 									>
 										{handle.title}
-									</Button>
+									</TabsItem>
 								</NavLink>
 							)}
-						</InlineButtons>
+						</TabsList>
 					}
 					<Outlet/>
 				</Section>
