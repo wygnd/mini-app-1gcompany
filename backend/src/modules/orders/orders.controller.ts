@@ -21,7 +21,7 @@ import {ApiAuthorizationHeaderDecorator} from "../../common/decorators/api-autho
 import {PaginatedResponseDto} from "../../common/dto/paginated-response.dto";
 import {ApiPaginatedResponse} from "../../common/decorators/api-paginated-response.decorator";
 import {OrdersPaginationDto} from "./dtos/pagination.dto";
-import * as express from 'express';
+import type {Request} from 'express';
 
 @ApiExtraModels(OrdersModel, PaginatedResponseDto)
 @ApiTags('Orders')
@@ -41,7 +41,7 @@ export class OrdersController {
 	})
 	@ApiExceptions()
 	@Get("/private")
-	async getUserOrders(@Query() queryParams: OrdersPaginationDto, @Req() request: express.Request) {
+	async getUserOrders(@Query() queryParams: OrdersPaginationDto, @Req() request: Request) {
 		try {
 			return await this.ordersService.getOrdersByUserId(request.user.id, queryParams);
 		} catch (error) {
@@ -78,7 +78,7 @@ export class OrdersController {
 	@ApiResponse({status: HttpStatus.CREATED, description: 'Success', type: OrdersModel})
 	@ApiExceptions()
 	@Post("/create")
-	async createOrder(@Body() createOrderFields: CreateOrderDto, @Req() request: express.Request) {
+	async createOrder(@Body() createOrderFields: CreateOrderDto, @Req() request: Request) {
 		try {
 			return await this.ordersService.createOrder(createOrderFields, request.user.id);
 		} catch(error) {
@@ -91,7 +91,7 @@ export class OrdersController {
 	@ApiExceptions()
 	@Roles(UserRoles.ADMIN)
 	@Patch("/update")
-	async updateOrder(@Body() updateOrderFields: UpdateOrderFields, @Req() request: express.Request) {
+	async updateOrder(@Body() updateOrderFields: UpdateOrderFields, @Req() request: Request) {
 		try {
 			return await this.ordersService.updateOrder(updateOrderFields, request.user.id);
 		} catch(error) {

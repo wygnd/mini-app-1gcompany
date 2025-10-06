@@ -20,13 +20,13 @@ export class CreateRefundDto {
 	@IsString()
 	address: string;
 
-	@ApiProperty({
-		type: String,
-		description: "Image url"
-	})
-	@IsNotEmpty()
-	@IsString()
-	attachmentUrl: string;
+	// @ApiProperty({
+	// 	type: String,
+	// 	description: "Image url"
+	// })
+	// @IsNotEmpty()
+	// @IsString()
+	// attachmentUrl: File;
 
 	@ApiProperty({
 		type: String,

@@ -2,7 +2,7 @@ import {CanActivate, ExecutionContext, Injectable, Logger, LoggerService, Unauth
 import {TelegramAuthService} from "../telegram-auth.service";
 import {Reflector} from "@nestjs/core";
 import {IS_PUBLIC_KEY} from "../../../common/decorators/public.decorator";
-import * as express from 'express';
+import type {Request} from 'express';
 import {UsersService} from "../../users/users.service";
 
 @Injectable()
@@ -24,7 +24,7 @@ export class TelegramAuthGuard implements CanActivate {
 
 		if (isPublic) return true;
 
-		const request = context.switchToHttp().getRequest<express.Request>();
+		const request = context.switchToHttp().getRequest<Request>();
 		const [authType, initData] = (request.headers['authorization'] || "").split(' ');
 		if (authType !== 'tma') {
 			this.logger.error('Invalid auth');

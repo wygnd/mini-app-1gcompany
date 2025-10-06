@@ -1,6 +1,6 @@
 export interface RefundForm {
 	organization: string;
 	address: string;
-	attachmentUrl: string;
+	attachmentUrl?: File;
 	countProduct: string;
 }

@@ -9,7 +9,7 @@ export const CreateRefund: FC = () => {
 	const [form, setForm] = useState<RefundForm>({
 		organization: "",
 		address: "",
-		attachmentUrl: "",
+		attachmentUrl: undefined,
 		countProduct: ""
 	});
 
@@ -23,9 +23,9 @@ export const CreateRefund: FC = () => {
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const {name, value, files} = e.target;
 
-		if(name === "attachmentUrl" && files && files.length > 0) return setForm({...form, [name]: `${files[0].name}|${value}`});
+		if (name === "attachmentUrl" && files && files.length > 0) return setForm({...form, [name]: files[0]});
 
-		setForm({...form, [name]: value})
+		setForm({...form, [name]: value});
 	}
 
 	const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
@@ -40,8 +40,17 @@ export const CreateRefund: FC = () => {
 		setFocused({...focused, [name]: false});
 	}
 
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+
+		const formData = new FormData();
+
+		const {address, attachmentUrl, countProduct, organization} = form;
+
+		formData.append('address', address);
+		formData.append('countProduct', countProduct);
+		formData.append('organization', organization);
+		attachmentUrl && formData.append('attachmentUrl', attachmentUrl);
 
 
 	}
@@ -86,7 +95,7 @@ export const CreateRefund: FC = () => {
 			/>
 			<FileInput
 				type="file"
-				label={form.attachmentUrl ? form.attachmentUrl.split('|')[0] : "Штрихкод"}
+				label={form.attachmentUrl ? form.attachmentUrl.name : "Штрихкод"}
 				name="attachmentUrl"
 				tabIndex={4}
 				accept=".pdf"

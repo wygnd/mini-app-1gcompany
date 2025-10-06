@@ -8,8 +8,8 @@ import {
 	ParseIntPipe, Patch,
 	Post,
 	Query,
-	Req,
-	UseGuards
+	Req, UploadedFile,
+	UseGuards, UseInterceptors
 } from "@nestjs/common";
 import {RefundsService} from "./refunds.service";
 import {CreateRefundDto} from "./dtos/create-refund.dto";
@@ -19,10 +19,11 @@ import {RolesGuard} from "../../common/guards/roles.guard";
 import {RefundDto} from "./dtos/refund.dto";
 import {ApiExceptions} from "../../common/decorators/api-exceptions.decorator";
 import {RefundPaginationDto} from "./dtos/refund-pagination.dto";
-import * as express from 'express';
+import type {Request} from 'express';
 import {UserRoles} from "../users/interfaces/users.interface";
 import {Roles} from "../../common/decorators/roles.decorator";
 import {UpdateRefundDto} from "./dtos/update-refund.dto";
+import {FileInterceptor} from "@nestjs/platform-express";
 
 @ApiTags("refunds")
 @ApiAuthorizationHeaderDecorator()
@@ -41,8 +42,12 @@ export class RefundsController {
 		type: RefundDto
 	})
 	@ApiExceptions()
+	@UseInterceptors(FileInterceptor('file'))
 	@Post('create')
-	async createRefund(@Body() fields: CreateRefundDto) {
+	async createRefund(
+		@UploadedFile() file: Express.Multer.File,
+		@Body() fields: CreateRefundDto
+	) {
 		try {
 			return await this.refundsService.createRefundOrder(fields);
 		} catch (error) {
@@ -92,7 +97,7 @@ export class RefundsController {
 	})
 	@ApiExceptions()
 	@Get('/me')
-	async getRefunds(@Query() queryParams: RefundPaginationDto, @Req() request: express.Request) {
+	async getRefunds(@Query() queryParams: RefundPaginationDto, @Req() request: Request) {
 		try {
 			return await this.refundsService.getRefundOrdersByUserId(request.user.id, queryParams);
 		} catch (error) {
@@ -141,7 +146,7 @@ export class RefundsController {
 	})
 	@ApiExceptions()
 	@Get("/me/:refundId")
-	async getRefundById(@Param('refundId', ParseIntPipe) refundId: number, @Req() request: express.Request) {
+	async getRefundById(@Param('refundId', ParseIntPipe) refundId: number, @Req() request: Request) {
 		try {
 			return await this.refundsService.getRefundById(refundId, request.user);
 		} catch (error) {
