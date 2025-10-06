@@ -1,0 +1,8 @@
+.form_wrapper > div {
+    padding: 0;
+    margin-bottom: 15px;
+}
+
+.form_wrapper > div:last-child {
+    margin-bottom: 0;
+}

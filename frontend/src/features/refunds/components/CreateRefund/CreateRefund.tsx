@@ -1,8 +1,8 @@
 import {ChangeEvent, FC, useState} from "react";
-import {FileInput, Input} from "@telegram-apps/telegram-ui";
+import {Button, FileInput, Input} from "@telegram-apps/telegram-ui";
 import {RefundForm} from "@/features/refunds/types/createRefund.ts";
 import * as React from "react";
-
+import styles from './CreateRefund.module.css';
 
 export const CreateRefund: FC = () => {
 
@@ -21,7 +21,9 @@ export const CreateRefund: FC = () => {
 	});
 
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-		const {name, value} = e.target;
+		const {name, value, files} = e.target;
+
+		if(name === "attachmentUrl" && files && files.length > 0) return setForm({...form, [name]: `${files[0].name}|${value}`});
 
 		setForm({...form, [name]: value})
 	}
@@ -38,8 +40,14 @@ export const CreateRefund: FC = () => {
 		setFocused({...focused, [name]: false});
 	}
 
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+
+
+	}
+
 	return (
-		<form>
+		<form className={styles.form_wrapper} onSubmit={handleSubmit}>
 			<Input
 				type="text"
 				name="organization"
@@ -50,6 +58,7 @@ export const CreateRefund: FC = () => {
 				onChange={handleChange}
 				onFocus={handleFocus}
 				onBlur={handleBlur}
+				required
 			/>
 			<Input
 				type="text"
@@ -61,6 +70,7 @@ export const CreateRefund: FC = () => {
 				onChange={handleChange}
 				onFocus={handleFocus}
 				onBlur={handleBlur}
+				required
 			/>
 			<Input
 				type="text"
@@ -72,13 +82,18 @@ export const CreateRefund: FC = () => {
 				onChange={handleChange}
 				onFocus={handleFocus}
 				onBlur={handleBlur}
+				required
 			/>
 			<FileInput
 				type="file"
-				label="Штрихкод"
+				label={form.attachmentUrl ? form.attachmentUrl.split('|')[0] : "Штрихкод"}
 				name="attachmentUrl"
 				tabIndex={4}
+				accept=".pdf"
+				onInput={handleChange}
+				required
 			/>
+			<Button size="l" type="submit" mode="filled">Оставить заявку</Button>
 		</form>
 	)
 }

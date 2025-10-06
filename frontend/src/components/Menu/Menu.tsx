@@ -19,19 +19,33 @@ export const Menu: FC = () => {
 	return (
 		<List>
 			<Section>
-				{router.map(({path, handle}) => {
+				{router.map(({path, handle, children}) => {
 					if (path == '/') return;
 					const {title} = handle;
 
-					return (
-						<NavLink
-							to={`${path}`}
-							key={path}
-							className={classNames('link', path == location.pathname && styles.link_active)}
-						>
-							<Cell>{title}</Cell>
-						</NavLink>
-					)
+					return !children || children.length === 0 ?
+						(
+							<NavLink
+								to={`${path}`}
+								key={path}
+								className={classNames('link', path == location.pathname && styles.link_active)}
+							>
+								<Cell>{title}</Cell>
+							</NavLink>
+						) : (
+							<Section header={title} key={path}
+							         className={classNames('link', path == location.pathname && styles.link_active)}>
+								{children.map(subRoute => (
+									<NavLink
+										to={`${path}/${subRoute.path}`}
+										key={subRoute.path}
+										className={classNames('link', subRoute.path == location.pathname && styles.link_active, styles.subMenuItem)}
+									>
+										<Cell>{subRoute.handle.title}</Cell>
+									</NavLink>
+								))}
+							</Section>
+						)
 				})}
 			</Section>
 		</List>

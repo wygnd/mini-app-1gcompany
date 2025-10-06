@@ -1,11 +1,13 @@
 import {Title} from "@telegram-apps/telegram-ui";
 import {FC} from "react";
 import {CreateRefund} from "@/features/refunds/components/CreateRefund/CreateRefund.tsx";
+import {classNames} from "@/css/classnames.ts";
+import styles from './RefundOrdersPage.module.css';
 
 export const RefundOrdersPage: FC = () => {
 	return (
 		<div className='p-10'>
-			<Title>Заказы на забор возвратов</Title>
+			<Title className={classNames(styles.title)}>Заказы на забор возвратов</Title>
 			<CreateRefund />
 		</div>
 	)

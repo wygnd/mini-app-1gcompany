@@ -2,3 +2,11 @@
 .link_active > div {
     background: var(--tgui--tertiary_bg_color);
 }
+
+.link_disabled {
+
+}
+
+.subMenuItem > div {
+    padding-left: 20px;
+}
