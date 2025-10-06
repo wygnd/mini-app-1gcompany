@@ -26,12 +26,13 @@ export class RefundsService {
 
 
 	async createRefundOrder(fields: CreateRefundDto) {
-		const newRefund = await this.refundsRepository.create(fields);
-		const refundDto = this.toDto(newRefund);
-
-		await this.redisService.set(REDIS_REFUND_KEY + refundDto.refundId, refundDto, 3600);
-
-		return refundDto;
+		// fixme
+		// const newRefund = await this.refundsRepository.create({...fields});
+		// const refundDto = this.toDto(newRefund);
+		//
+		// await this.redisService.set(REDIS_REFUND_KEY + refundDto.refundId, refundDto, 3600);
+		//
+		// return refundDto;
 	}
 
 	async updateRefundById(refundId: number, fields: UpdateRefundDto) {
