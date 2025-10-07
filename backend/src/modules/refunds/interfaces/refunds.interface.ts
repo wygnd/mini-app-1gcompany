@@ -3,6 +3,7 @@ import {Optional} from "sequelize";
 
 export interface IRefundAttributes {
 	refundId: number;
+	title: string;
 	organization: string;
 	address: string;
 	attachmentId: string;

@@ -30,6 +30,17 @@ export class RefundsModel extends Model<IRefundAttributes, IRefundCreationAttrib
 
 	@ApiProperty({
 		type: String,
+		example: "Заявка на возврат #45231",
+		description: "Refund title"
+	})
+	@Column({
+		type: DataType.STRING,
+		allowNull: false
+	})
+	title: string;
+
+	@ApiProperty({
+		type: String,
 		example: "OOO \"COMPANY NAME\"",
 		description: "Company"
 	})

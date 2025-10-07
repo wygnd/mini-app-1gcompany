@@ -30,8 +30,10 @@ export class RefundsService {
 	async createRefundOrder(fields: CreateRefundDto, file: Express.Multer.File, user: TelegramUserExtended) {
 		const {result} = await this.telegramService.uploadFile(file, user.id);
 		const fileUrl = await this.telegramService.getFileLink(result.file_id);
+
 		const newRefund = await this.refundsRepository.create({
 			...fields,
+			title: "Заявка на возврат",
 			userId: user.id,
 			attachmentUrl: fileUrl,
 			attachmentId: result.file_id

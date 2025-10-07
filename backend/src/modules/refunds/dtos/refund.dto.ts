@@ -11,6 +11,15 @@ export class RefundDto {
 
 	@ApiProperty({
 		type: String,
+		example: "Заявка на возврат #235234",
+		description: "Refund title"
+	})
+	@IsNotEmpty()
+	@IsString()
+	title: string;
+
+	@ApiProperty({
+		type: String,
 		example: "OOO \"COMPANY NAME\"",
 		description: "Company"
 	})
