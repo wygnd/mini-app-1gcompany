@@ -45,7 +45,7 @@ export class TelegramAuthGuard implements CanActivate {
 
 		const userDto = await this.usersService.findOrCreateUser(user);
 
-		request.user = {...user, role: userDto.role};
+		request.user = {...user, role: userDto.role, userId: userDto.userId};
 		return true;
 	}
 }

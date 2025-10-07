@@ -14,5 +14,6 @@ export interface TelegramUser {
 }
 
 export interface TelegramUserExtended extends TelegramUser {
+	userId: number,
 	role: UserRoles
 }
