@@ -27,7 +27,6 @@ import {FileInterceptor} from "@nestjs/platform-express";
 
 @ApiTags("refunds")
 @ApiAuthorizationHeaderDecorator()
-@UseGuards(RolesGuard)
 @Controller('refunds')
 export class RefundsController {
 	constructor(
@@ -64,6 +63,7 @@ export class RefundsController {
 	})
 	@ApiExceptions()
 	@Roles(UserRoles.ADMIN)
+	@UseGuards(RolesGuard)
 	@Get('/:userId')
 	async getRefundsByUserId(@Query() queryParams: RefundPaginationDto, @Param('userId', ParseIntPipe) requestUserId: number) {
 		try {
@@ -81,6 +81,7 @@ export class RefundsController {
 	})
 	@ApiExceptions()
 	@Roles(UserRoles.ADMIN)
+	@UseGuards(RolesGuard)
 	@Get('/all')
 	async getRefundsAdmin(@Query() queryParams: RefundPaginationDto) {
 		try {
@@ -114,6 +115,7 @@ export class RefundsController {
 	})
 	@ApiExceptions()
 	@Roles(UserRoles.ADMIN)
+	@UseGuards(RolesGuard)
 	@Delete("/:refundId")
 	async removeRefund(@Param('refundId', ParseIntPipe) refundId: number) {
 		try {
