@@ -10,6 +10,7 @@ import {plainToInstance} from "class-transformer";
 import {UserModel} from "../users/entities/users.entity";
 import {TelegramUserExtended} from "../telegram/interfaces/user-telegram.interface";
 import {UserRoles} from "../users/interfaces/users.interface";
+import {TelegramService} from "../telegram/telegram.service";
 
 const {refund: REDIS_REFUND_KEY} = REDIS_KEYS;
 
@@ -20,12 +21,13 @@ export class RefundsService {
 		@Inject('RefundsRepository')
 		private readonly refundsRepository: typeof RefundsModel,
 		@Inject(REDIS_CLIENT)
-		private readonly redisService: RedisService
+		private readonly redisService: RedisService,
+		private readonly telegramService: TelegramService
 	) {
 	}
 
 
-	async createRefundOrder(fields: CreateRefundDto) {
+	async createRefundOrder(fields: CreateRefundDto, file: Express.Multer.File) {
 		// fixme
 		// const newRefund = await this.refundsRepository.create({...fields});
 		// const refundDto = this.toDto(newRefund);

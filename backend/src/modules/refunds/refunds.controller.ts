@@ -49,7 +49,7 @@ export class RefundsController {
 		@Body() fields: CreateRefundDto
 	) {
 		try {
-			return await this.refundsService.createRefundOrder(fields);
+			return await this.refundsService.createRefundOrder(fields, file);
 		} catch (error) {
 			throw new HttpException(error, HttpStatus.BAD_REQUEST);
 		}
