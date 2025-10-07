@@ -21,8 +21,7 @@ export class RefundsService {
 		@Inject('RefundsRepository')
 		private readonly refundsRepository: typeof RefundsModel,
 		@Inject(REDIS_CLIENT)
-		private readonly redisService: RedisService,
-		private readonly telegramService: TelegramService
+		private readonly redisService: RedisService
 	) {
 	}
 
