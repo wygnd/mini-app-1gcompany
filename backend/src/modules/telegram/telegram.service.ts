@@ -20,6 +20,7 @@ export class TelegramService {
 
 		const formData = new FormData();
 		formData.append('chat_id', userTelegramId.toString());
+		formData.append('disable_notification', true);
 		formData.append('document', file.buffer, {filename: file.originalname});
 
 		const data = await this.apiService.post<TelegramSuccessSendDocumentResponse>(`${this.telegramApi}/sendDocument`, formData, {
