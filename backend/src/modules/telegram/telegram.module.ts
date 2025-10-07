@@ -3,11 +3,11 @@ import {TelegramAuthService} from "./telegram-auth.service";
 import {telegramProviders} from "./telegram.providers";
 import {UsersModule} from "../users/users.module";
 import {TelegramService} from "./telegram.service";
-import {HttpModule} from "@nestjs/axios";
+import {ApiModule} from "../api/api.module";
 
 
 @Module({
-	imports: [UsersModule, HttpModule],
+	imports: [UsersModule, ApiModule],
 	providers: [...telegramProviders, TelegramAuthService, TelegramService],
 	exports: [TelegramAuthService, TelegramService],
 })

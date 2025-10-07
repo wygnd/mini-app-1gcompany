@@ -4,6 +4,7 @@ export interface RefundInterface {
 	organization: string;
 	address: string;
 	attachmentUrl: string;
+	attachmentId: string;
 	countProduct: string;
 }
 

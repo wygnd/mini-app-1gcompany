@@ -3,6 +3,7 @@ import {Button, FileInput, Input} from "@telegram-apps/telegram-ui";
 import {RefundForm} from "@/features/refunds/types/createRefund.ts";
 import * as React from "react";
 import styles from './CreateRefund.module.css';
+import {createRefund} from "@/features/refunds/api/refundApi.ts";
 
 export const CreateRefund: FC = () => {
 
@@ -50,9 +51,14 @@ export const CreateRefund: FC = () => {
 		formData.append('address', address);
 		formData.append('countProduct', countProduct);
 		formData.append('organization', organization);
-		attachmentUrl && formData.append('attachmentUrl', attachmentUrl);
+		attachmentUrl && formData.append('file', attachmentUrl);
 
 
+		const {result, error} = await createRefund(formData);
+
+		if (error) return void alert(error);
+
+		console.log(result);
 	}
 
 	return (

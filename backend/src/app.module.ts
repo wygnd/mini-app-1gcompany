@@ -9,9 +9,10 @@ import {TelegramAuthGuard} from "./modules/telegram/guards/telegram-auth.guard";
 import {RedisModule} from "./modules/redis/redis.module";
 import {ConfigAppModule} from "./config/config.module";
 import {RefundsModule} from "./modules/refunds/refunds.module";
+import {ApiModule} from "./modules/api/api.module";
 
 @Module({
-	imports: [TelegramModule, ConfigAppModule, OrdersModule, UsersModule, RedisModule, RefundsModule],
+	imports: [TelegramModule, ConfigAppModule, OrdersModule, UsersModule, RedisModule, RefundsModule, ApiModule],
 	controllers: [AppController],
 	providers: [AppService,
 		{

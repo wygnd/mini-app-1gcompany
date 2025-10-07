@@ -56,9 +56,19 @@ export class RefundsModel extends Model<IRefundAttributes, IRefundCreationAttrib
 	})
 	@Column({
 		type: DataType.STRING,
+		allowNull: true
+	})
+	declare attachmentUrl?: string;
+
+	@ApiProperty({
+		type: String,
+		description: "Image id"
+	})
+	@Column({
+		type: DataType.STRING,
 		allowNull: false
 	})
-	declare attachmentUrl: string;
+	declare attachmentId: string;
 
 	@ApiProperty({
 		type: String,

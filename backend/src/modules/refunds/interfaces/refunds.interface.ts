@@ -5,6 +5,7 @@ export interface IRefundAttributes {
 	refundId: number;
 	organization: string;
 	address: string;
+	attachmentId: string;
 	attachmentUrl: string;
 	countProduct: string;
 }

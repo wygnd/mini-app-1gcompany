@@ -1,5 +1,5 @@
 import {ApiProperty} from "@nestjs/swagger";
-import {IsNotEmpty, IsNumber, IsString} from "class-validator";
+import {IsNotEmpty, IsNumber, IsOptional, IsString} from "class-validator";
 
 export class RefundDto {
 	@ApiProperty({
@@ -31,9 +31,17 @@ export class RefundDto {
 		type: String,
 		description: "Image url"
 	})
-	@IsNotEmpty()
+	@IsOptional()
 	@IsString()
 	attachmentUrl: string;
+
+	@ApiProperty({
+		type: String,
+		description: "Image id"
+	})
+	@IsNotEmpty()
+	@IsString()
+	attachmentId: string;
 
 	@ApiProperty({
 		type: String,

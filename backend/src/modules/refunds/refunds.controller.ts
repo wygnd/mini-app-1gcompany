@@ -46,10 +46,11 @@ export class RefundsController {
 	@Post('create')
 	async createRefund(
 		@UploadedFile() file: Express.Multer.File,
-		@Body() fields: CreateRefundDto
+		@Body() fields: CreateRefundDto,
+		@Req() request: Request
 	) {
 		try {
-			return await this.refundsService.createRefundOrder(fields, file);
+			return await this.refundsService.createRefundOrder(fields, file, request.user.id);
 		} catch (error) {
 			throw new HttpException(error, HttpStatus.BAD_REQUEST);
 		}

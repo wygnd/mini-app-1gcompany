@@ -21,19 +21,25 @@ export class RefundsService {
 		@Inject('RefundsRepository')
 		private readonly refundsRepository: typeof RefundsModel,
 		@Inject(REDIS_CLIENT)
-		private readonly redisService: RedisService
+		private readonly redisService: RedisService,
+		private readonly telegramService: TelegramService,
 	) {
 	}
 
 
-	async createRefundOrder(fields: CreateRefundDto, file: Express.Multer.File) {
-		// fixme
-		// const newRefund = await this.refundsRepository.create({...fields});
-		// const refundDto = this.toDto(newRefund);
-		//
-		// await this.redisService.set(REDIS_REFUND_KEY + refundDto.refundId, refundDto, 3600);
-		//
-		// return refundDto;
+	async createRefundOrder(fields: CreateRefundDto, file: Express.Multer.File, userTelegramId: number) {
+		const {result} = await this.telegramService.uploadFile(file, userTelegramId);
+		const fileUrl = await this.telegramService.getFileLink(result.file_id);
+		const newRefund = await this.refundsRepository.create({
+			...fields,
+			attachmentUrl: fileUrl,
+			attachmentId: result.file_id
+		});
+		const refundDto = this.toDto(newRefund);
+
+		await this.redisService.set(REDIS_REFUND_KEY + refundDto.refundId, refundDto, 3600);
+
+		return refundDto;
 	}
 
 	async updateRefundById(refundId: number, fields: UpdateRefundDto) {
@@ -101,7 +107,7 @@ export class RefundsService {
 			const refundFromDB = await this.refundsRepository.findByPk(refundId);
 			if (!refundFromDB) throw new NotFoundException();
 
-			refundObject = refundFromDB;
+			refundObject = this.toDto(refundFromDB);
 		} else {
 			refundObject = refundFromCache;
 		}
