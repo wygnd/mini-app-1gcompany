@@ -9,7 +9,7 @@ import {HttpModule} from "@nestjs/axios";
 @Module({
 	imports: [UsersModule, HttpModule],
 	providers: [...telegramProviders, TelegramAuthService, TelegramService],
-	exports: [TelegramAuthService],
+	exports: [TelegramAuthService, TelegramService],
 })
 export class TelegramModule {
 }
