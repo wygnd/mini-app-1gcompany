@@ -2,6 +2,7 @@ import {BadRequestException, Injectable, Logger} from "@nestjs/common";
 import {ConfigService} from "@nestjs/config";
 import {TelegramSuccessGetFileResponse, TelegramSuccessSendDocumentResponse} from "./interfaces/telegram.api.interface";
 import {ApiService} from "../api/api.service";
+import FormData from "form-data";
 
 @Injectable()
 export class TelegramService {
@@ -19,16 +20,14 @@ export class TelegramService {
 
 		const formData = new FormData();
 		formData.append('chat_id', userTelegramId.toString());
-		formData.append('document', file.buffer.toString());
+		formData.append('document', file.buffer, {filename: file.originalname});
 
 		const data = await this.apiService.post<TelegramSuccessSendDocumentResponse>(`${this.telegramApi}/sendDocument`, formData, {
-			headers: {
-				'Content-Type': 'multipart/form-data',
-			}
+			headers: formData.getHeaders()
 		});
 
 		this.logger.debug('TELEGRAM SERVICE: telegram response', data);
-		if (!data.result.document.file_id) throw new BadRequestException('Invalid document id');
+		if (!data.result.document.file_id) throw new Error('Invalid document id');
 
 		return await this.getFile(data.result.document.file_id);
 	}

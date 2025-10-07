@@ -9,26 +9,3 @@ export async function login() {
 		throw error;
 	}
 }
-
-interface responseTemp {
-	status: number;
-	message: string;
-}
-
-export async function getAll() {
-	try {
-		const {data} = await $API.get<responseTemp>("/test");
-		console.log(data);
-	} catch (error) {
-		console.log("EXCEPTION ERROR: ", error);
-	}
-}
-
-export async function getAdmin() {
-	try {
-		const {data} = await $API.get<responseTemp>("/test-admin");
-		console.log(data);
-	} catch (error) {
-		console.log("EXCEPTION ERROR: ", error);
-	}
-}

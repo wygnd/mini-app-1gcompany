@@ -5,7 +5,7 @@ import {AppRoot} from '@telegram-apps/telegram-ui';
 
 import {router, adminRouter} from '@/navigation/routes.tsx';
 import {useUserStore} from "@/features/users/store/userStore.ts";
-import {getAdmin, getAll, login} from "@/features/users/api/usersApi.ts";
+import {login} from "@/features/users/api/usersApi.ts";
 
 export function App() {
 	const lp = useMemo(() => retrieveLaunchParams(), []);
@@ -14,11 +14,6 @@ export function App() {
 
 	useEffect(() => {
 		login().then(data => setUser(data));
-
-		(async () => {
-			await getAll()
-			await getAdmin()
-		})()
 	}, [])
 
 	const initialRouter = isAdmin() ? adminRouter : router;
@@ -28,7 +23,7 @@ export function App() {
 			appearance={isDark ? 'dark' : 'light'}
 			platform={['macos', 'ios'].includes(lp.tgWebAppPlatform) ? 'ios' : 'base'}
 		>
-			<RouterProvider router={initialRouter} />
+			<RouterProvider router={initialRouter}/>
 		</AppRoot>
 	);
 }
