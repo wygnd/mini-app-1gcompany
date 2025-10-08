@@ -144,7 +144,7 @@ export class OrdersModel extends Model<IOrderAttributes, IOrderCreationAttribute
 		description: "Any data for order"
 	})
 	@Column({
-		type: DataType.TEXT('long'),
+		type: DataType.STRING,
 		defaultValue: '',
 		allowNull: false,
 	})
