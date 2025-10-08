@@ -51,12 +51,7 @@ export class RefundsController {
 		@Req() request: Request
 	) {
 		try {
-			this.logger.debug('Check controller', fields, file, request.user);
-			return {
-				message: "test",
-				status: HttpStatus.OK,
-			}
-			// return await this.refundsService.createRefundOrder(fields, file, request.user);
+			return await this.refundsService.createRefundOrder(fields, file, request.user);
 		} catch (error) {
 			throw new HttpException(error, HttpStatus.BAD_REQUEST);
 		}
