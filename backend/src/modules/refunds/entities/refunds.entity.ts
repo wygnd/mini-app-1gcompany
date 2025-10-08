@@ -4,7 +4,7 @@ import {ApiProperty} from "@nestjs/swagger";
 import {UserModel} from "../../users/entities/users.entity";
 
 @Table({
-	tableName: "returns"
+	tableName: "refunds"
 })
 export class RefundsModel extends Model<IRefundAttributes, IRefundCreationAttributes> {
 	@ApiProperty({
@@ -30,7 +30,7 @@ export class RefundsModel extends Model<IRefundAttributes, IRefundCreationAttrib
 
 	@ApiProperty({
 		type: String,
-		example: "Заявка на возврат #45231",
+		example: "Заявка на возврат",
 		description: "Refund title"
 	})
 	@Column({
