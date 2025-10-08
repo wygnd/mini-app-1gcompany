@@ -4,6 +4,7 @@ import styles from "./Header.module.css";
 import {RiCloseCircleFill} from "react-icons/ri";
 import {Menu} from "@/components/Menu/Menu.tsx";
 import {Link} from "@/components/Link/Link.tsx";
+import {classNames} from "@/css/classnames.ts";
 
 export const Header: FC = () => {
 	const [burger, setBurger] = useState(false);
@@ -25,7 +26,7 @@ export const Header: FC = () => {
 	const toggleBurger = () => setBurger(!burger);
 
 	return (
-		<header>
+		<header className={classNames(styles.header)}>
 			<div className={styles.header_wrapper}>
 				<Title level="1">
 					<Link to="/">1G Company</Link>

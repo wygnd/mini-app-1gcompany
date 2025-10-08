@@ -18,7 +18,6 @@ const {refund: REDIS_REFUND_KEY} = REDIS_KEYS;
 export class RefundsService {
 	private readonly logger = new Logger(RefundsService.name, {timestamp: true});
 
-
 	constructor(
 		@Inject('RefundsRepository')
 		private readonly refundsRepository: typeof RefundsModel,
@@ -28,11 +27,10 @@ export class RefundsService {
 	) {
 	}
 
-
 	async createRefundOrder(fields: CreateRefundDto, file: Express.Multer.File, user: TelegramUserExtended) {
-		const {result} = await this.telegramService.uploadFile(file, user.id);
-		this.logger.debug('upload file', result);
-		const fileUrl = this.telegramService.generateFileLink(result.file_id);
+		const {document} = await this.telegramService.uploadFile(file, user.id);
+		this.logger.debug('upload file', document);
+		const fileUrl = await this.telegramService.getFileLinkById(document.file_id);
 		this.logger.debug('Get file link', fileUrl);
 
 		const newRefund = await this.refundsRepository.create({
@@ -40,7 +38,7 @@ export class RefundsService {
 			title: "Заявка на возврат",
 			userId: user.id,
 			attachmentUrl: fileUrl,
-			attachmentId: result.file_id
+			attachmentId: document.file_id
 		});
 		this.logger.debug('After create new row in database', newRefund);
 		const refundDto = this.toDto(newRefund);

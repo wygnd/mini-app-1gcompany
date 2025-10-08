@@ -1,3 +1,7 @@
+.header {
+
+}
+
 .header_wrapper {
     display: flex;
     align-items: center;
@@ -43,6 +47,7 @@
     width: auto;
     height: -webkit-fill-available;
     transform: translateX(-100%);
+    border-right: 1px solid var(--tg-theme-secondary-bg-color);
     z-index: 100;
     background: var(--tgui--bg_color);
     display: flex;
