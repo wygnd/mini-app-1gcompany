@@ -3,7 +3,7 @@ import {
 	Controller, Delete,
 	Get,
 	HttpException,
-	HttpStatus,
+	HttpStatus, Logger,
 	Param,
 	ParseIntPipe, Patch,
 	Post,
@@ -29,6 +29,8 @@ import {FileInterceptor} from "@nestjs/platform-express";
 @ApiAuthorizationHeaderDecorator()
 @Controller('refunds')
 export class RefundsController {
+	private readonly logger = new Logger(RefundsController.name, {timestamp: true});
+
 	constructor(
 		private readonly refundsService: RefundsService,
 	) {
@@ -49,7 +51,12 @@ export class RefundsController {
 		@Req() request: Request
 	) {
 		try {
-			return await this.refundsService.createRefundOrder(fields, file, request.user);
+			this.logger.debug('Check controller', fields, file, request.user);
+			return {
+				message: "test",
+				status: HttpStatus.OK,
+			}
+			// return await this.refundsService.createRefundOrder(fields, file, request.user);
 		} catch (error) {
 			throw new HttpException(error, HttpStatus.BAD_REQUEST);
 		}
