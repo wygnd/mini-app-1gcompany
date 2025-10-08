@@ -1,4 +1,4 @@
-import {BadRequestException, Injectable, Logger} from "@nestjs/common";
+import {Injectable, Logger} from "@nestjs/common";
 import {ConfigService} from "@nestjs/config";
 import {TelegramSuccessGetFileResponse, TelegramSuccessSendDocumentResponse} from "./interfaces/telegram.api.interface";
 import {ApiService} from "../api/api.service";
@@ -40,5 +40,9 @@ export class TelegramService {
 	async getFileLink(fileId: string): Promise<string> {
 		const {result} = await this.getFile(fileId);
 		return `${this.telegramApi}/${result.file_id}`;
+	}
+
+	generateFileLink(fileId: string) {
+		return `${this.telegramApi}/${fileId}`;
 	}
 }

@@ -1,4 +1,4 @@
-import {Inject, Injectable, NotFoundException, UnauthorizedException} from "@nestjs/common";
+import {Inject, Injectable, Logger, NotFoundException, UnauthorizedException} from "@nestjs/common";
 import {RefundsModel} from "./entities/refunds.entity";
 import {PaginationDto} from "../../common/dto/pagination.dto";
 import {CreateRefundDto} from "./dtos/create-refund.dto";
@@ -16,6 +16,8 @@ const {refund: REDIS_REFUND_KEY} = REDIS_KEYS;
 
 @Injectable()
 export class RefundsService {
+	private readonly logger = new Logger(RefundsService.name, {timestamp: true});
+
 
 	constructor(
 		@Inject('RefundsRepository')
@@ -29,7 +31,9 @@ export class RefundsService {
 
 	async createRefundOrder(fields: CreateRefundDto, file: Express.Multer.File, user: TelegramUserExtended) {
 		const {result} = await this.telegramService.uploadFile(file, user.id);
-		const fileUrl = await this.telegramService.getFileLink(result.file_id);
+		this.logger.debug('upload file', result);
+		const fileUrl = this.telegramService.generateFileLink(result.file_id);
+		this.logger.debug('Get file link', fileUrl);
 
 		const newRefund = await this.refundsRepository.create({
 			...fields,
@@ -38,6 +42,7 @@ export class RefundsService {
 			attachmentUrl: fileUrl,
 			attachmentId: result.file_id
 		});
+		this.logger.debug('After create new row in database', newRefund);
 		const refundDto = this.toDto(newRefund);
 
 		await this.redisService.set(REDIS_REFUND_KEY + refundDto.refundId, refundDto, 3600);
