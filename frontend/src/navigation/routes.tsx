@@ -21,11 +21,11 @@ export const routes: RouteObject[] = [
 			{path: 'orders-return', Component: RefundOrdersPage, handle: {title: 'Заказы на забор возвратов'}},
 		]
 	},
-	{
-		path: '/orders', Component: LogisticsPage, handle: {title: 'Обработка товара'}, children: [
-			{path: 'terms-of-reference', Component: LogisticsPage, handle: {title: 'Техническое задание'}},
-		]
-	},
+	// {
+	// 	path: '/orders', Component: LogisticsPage, handle: {title: 'Обработка товара'}, children: [
+	// 		{path: 'terms-of-reference', Component: LogisticsPage, handle: {title: 'Техническое задание'}},
+	// 	]
+	// },
 	{path: '/theme-params', Component: ThemeParamsPage, handle: {title: 'Параметры темы'}}
 ];
 
