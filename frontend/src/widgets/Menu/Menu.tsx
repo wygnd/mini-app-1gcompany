@@ -4,7 +4,7 @@ import {adminRoutes, routes as defaultRoutes} from "@/navigation/routes.tsx";
 import {Cell, List, Section} from "@telegram-apps/telegram-ui";
 import {NavLink, useLocation} from "react-router-dom";
 import styles from './Menu.module.css';
-import {classNames} from "@/css/classnames.ts";
+import {classNames} from "@/shared/css/classnames.ts";
 
 
 export const Menu: FC = () => {

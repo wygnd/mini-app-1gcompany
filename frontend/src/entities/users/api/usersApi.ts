@@ -1,4 +1,4 @@
-import {$API} from "@/http";
+import {$API} from "@/shared/http";
 import {UserInterface} from "@/features/users/types/user.ts";
 
 export async function login() {

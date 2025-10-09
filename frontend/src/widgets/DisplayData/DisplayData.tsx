@@ -2,9 +2,9 @@ import { isRGB } from '@telegram-apps/sdk-react';
 import { Cell, Checkbox, Section } from '@telegram-apps/telegram-ui';
 import type { FC, ReactNode } from 'react';
 
-import { RGB } from '@/components/RGB/RGB.tsx';
-import { Link } from '@/components/Link/Link.tsx';
-import { bem } from '@/css/bem.ts';
+import { RGB } from '@/widgets/RGB/RGB.tsx';
+import { Link } from '@/widgets/Link/Link.tsx';
+import { bem } from '@/shared/css/bem.ts';
 
 import './DisplayData.css';
 

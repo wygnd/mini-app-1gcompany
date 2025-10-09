@@ -1,7 +1,7 @@
 import {useNavigate} from 'react-router-dom';
 import {hideBackButton, onBackButtonClick, showBackButton} from '@telegram-apps/sdk-react';
 import {type PropsWithChildren, useEffect} from 'react';
-import {Header} from "@/components/Header/Header.tsx";
+import {Header} from "@/widgets/Header/Header.tsx";
 
 export function Page({children, back = true}: PropsWithChildren<{
 	/**

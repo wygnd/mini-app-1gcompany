@@ -1,13 +1,10 @@
-import {Injectable, Logger} from "@nestjs/common";
-import {ApiService} from "../api/api.service";
+import {Injectable} from "@nestjs/common";
 import {TelegramClient} from "./telegram.client";
 
 @Injectable()
 export class TelegramService {
-	private readonly logger = new Logger(TelegramService.name, {timestamp: true});
 
 	constructor(
-		private readonly apiService: ApiService,
 		private readonly telegramClient: TelegramClient,
 	) {
 	}

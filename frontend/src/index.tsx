@@ -5,8 +5,8 @@ import ReactDOM from 'react-dom/client';
 import { StrictMode } from 'react';
 import { retrieveLaunchParams } from '@telegram-apps/sdk-react';
 
-import { Root } from '@/components/Root.tsx';
-import { EnvUnsupported } from '@/components/EnvUnsupported.tsx';
+import { Root } from '@/widgets/Root.tsx';
+import { EnvUnsupported } from '@/widgets/EnvUnsupported.tsx';
 import { init } from '@/init.ts';
 
 import './index.css';

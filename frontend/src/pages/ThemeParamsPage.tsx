@@ -2,8 +2,8 @@ import { themeParams, useSignal } from '@telegram-apps/sdk-react';
 import type { FC } from 'react';
 import { List } from '@telegram-apps/telegram-ui';
 
-import { DisplayData } from '@/components/DisplayData/DisplayData.tsx';
-import { Page } from '@/components/Page.tsx';
+import { DisplayData } from '@/widgets/DisplayData/DisplayData.tsx';
+import { Page } from '@/widgets/Page.tsx';
 
 export const ThemeParamsPage: FC = () => {
   const tp = useSignal(themeParams.state);

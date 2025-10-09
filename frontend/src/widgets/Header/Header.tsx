@@ -2,9 +2,9 @@ import {FC, useEffect, useState} from "react";
 import {Title} from "@telegram-apps/telegram-ui";
 import styles from "./Header.module.css";
 import {RiCloseCircleFill} from "react-icons/ri";
-import {Menu} from "@/components/Menu/Menu.tsx";
-import {Link} from "@/components/Link/Link.tsx";
-import {classNames} from "@/css/classnames.ts";
+import {Menu} from "@/widgets/Menu/Menu.tsx";
+import {Link} from "@/widgets/Link/Link.tsx";
+import {classNames} from "@/shared/css/classnames.ts";
 
 export const Header: FC = () => {
 	const [burger, setBurger] = useState(false);

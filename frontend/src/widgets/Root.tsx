@@ -1,5 +1,5 @@
-import { App } from '@/components/App.tsx';
-import { ErrorBoundary } from '@/components/ErrorBoundary.tsx';
+import { App } from '@/widgets/App.tsx';
+import { ErrorBoundary } from '@/widgets/ErrorBoundary.tsx';
 
 function ErrorBoundaryError({ error }: { error: unknown }) {
   return (

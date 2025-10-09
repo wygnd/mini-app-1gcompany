@@ -1,7 +1,8 @@
-import {$API} from "@/http";
+import {$API} from "@/shared/http";
 import {RefundInterface} from "@/features/refunds/types/refunds.ts";
 import axios from 'axios';
-import {ApiResponse} from "@/types/apiResponse.ts";
+import {ApiResponse} from "@/shared/types/apiResponse.ts";
+import {QueryParams} from "@/shared/types/queryParams.ts";
 
 export const createRefund = async (body: FormData): Promise<ApiResponse<RefundInterface | null>> => {
 	try {
@@ -18,9 +19,16 @@ export const createRefund = async (body: FormData): Promise<ApiResponse<RefundIn
 	}
 }
 
-export const getRefundList = async (): Promise<ApiResponse<RefundInterface[] | null>> => {
+export const getRefundList = async (params?: QueryParams): Promise<ApiResponse<RefundInterface[] | null>> => {
 	try {
-		const {data} = await $API.get<RefundInterface[]>("/refunds/list");
+		const {data} = await $API.get<RefundInterface[]>('/refunds/me', {
+			params: {
+				page: params?.page ?? 1,
+				limit: params?.limit ?? 10,
+				sort: params?.orderBy,
+				order: params?.order
+			}
+		});
 
 		return {result: data, error: null};
 	} catch (err) {

@@ -37,7 +37,7 @@ export class RefundsModel extends Model<IRefundAttributes, IRefundCreationAttrib
 		type: DataType.STRING,
 		allowNull: false
 	})
-	title: string;
+	declare title: string;
 
 	@ApiProperty({
 		type: String,

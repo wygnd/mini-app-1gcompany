@@ -1,6 +1,6 @@
 import type {FC} from 'react';
 
-import {Page} from '@/components/Page.tsx';
+import {Page} from '@/widgets/Page.tsx';
 
 
 export const IndexPage: FC = () => {

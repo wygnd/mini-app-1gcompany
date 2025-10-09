@@ -1,7 +1,7 @@
 import {Title} from "@telegram-apps/telegram-ui";
 import {FC} from "react";
 import {CreateRefund} from "@/features/refunds/components/CreateRefund/CreateRefund.tsx";
-import {classNames} from "@/css/classnames.ts";
+import {classNames} from "@/shared/css/classnames.ts";
 import styles from './RefundOrdersPage.module.css';
 import {RefundList} from "@/features/refunds/components/RefundList/RefundList.jsx.tsx";
 

@@ -1,5 +1,5 @@
 import {FC} from "react";
-import {Page} from "@/components/Page.tsx";
+import {Page} from "@/widgets/Page.tsx";
 import {LargeTitle} from "@telegram-apps/telegram-ui";
 
 
