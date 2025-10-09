@@ -1,5 +1,5 @@
 import {Injectable, Logger} from "@nestjs/common";
-import {Bot as TelegramBotApi} from "grammy";
+import {Bot as TelegramBotApi, InputFile} from "grammy";
 import {ConfigService} from "@nestjs/config";
 
 @Injectable()
@@ -19,7 +19,7 @@ export class TelegramClient {
 	}
 
 	async sendDocument(file: Express.Multer.File, telegramUserId: number) {
-		return await this.botApi.api.sendDocument(telegramUserId, file.buffer.toString(), {
+		return await this.botApi.api.sendDocument(telegramUserId, new InputFile(file.buffer), {
 			disable_notification: true
 		});
 	}
