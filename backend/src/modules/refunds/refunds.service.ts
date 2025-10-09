@@ -36,7 +36,7 @@ export class RefundsService {
 		const newRefund = await this.refundsRepository.create({
 			...fields,
 			title: "Заявка на возврат",
-			userId: user.id,
+			userId: user.userId,
 			attachmentUrl: fileUrl,
 			attachmentId: document.file_id
 		});
