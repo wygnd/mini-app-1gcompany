@@ -1,5 +1,5 @@
 import {FC} from "react";
-import {useUserStore} from "@/features/users/store/userStore.ts";
+import {useUserStore} from "@/entities/users/store/userStore.ts";
 import {adminRoutes, routes as defaultRoutes} from "@/navigation/routes.tsx";
 import {Cell, List, Section} from "@telegram-apps/telegram-ui";
 import {NavLink, useLocation} from "react-router-dom";

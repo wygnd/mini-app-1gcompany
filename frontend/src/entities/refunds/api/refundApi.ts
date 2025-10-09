@@ -1,5 +1,5 @@
 import {$API} from "@/shared/http";
-import {RefundInterface} from "@/features/refunds/types/refunds.ts";
+import {RefundInterface} from "@/entities/refunds/types/refunds.ts";
 import axios from 'axios';
 import {ApiResponse} from "@/shared/types/apiResponse.ts";
 import {QueryParams} from "@/shared/types/queryParams.ts";

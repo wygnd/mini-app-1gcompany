@@ -4,8 +4,8 @@ import {retrieveLaunchParams, useSignal, isMiniAppDark} from '@telegram-apps/sdk
 import {AppRoot} from '@telegram-apps/telegram-ui';
 
 import {router, adminRouter} from '@/navigation/routes.tsx';
-import {useUserStore} from "@/features/users/store/userStore.ts";
-import {login} from "@/features/users/api/usersApi.ts";
+import {useUserStore} from "@/entities/users/store/userStore.ts";
+import {login} from "@/entities/users/api/usersApi.ts";
 
 export function App() {
 	const lp = useMemo(() => retrieveLaunchParams(), []);

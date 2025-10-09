@@ -1,8 +1,8 @@
 import {FC, useEffect} from "react";
 import {List, Title} from "@telegram-apps/telegram-ui";
-import {useRefundStore} from "@/features/refunds/store/refundStore.ts";
-import {RefundCard} from "@/features/refunds/components/RefundCard/RefundCard.tsx";
-import {getRefundList} from "@/features/refunds/api/refundApi.ts";
+import {useRefundStore} from "@/entities/refunds/store/refundStore.ts";
+import {RefundCard} from "@/entities/refunds/components/RefundCard/RefundCard.tsx";
+import {getRefundList} from "@/entities/refunds/api/refundApi.ts";
 
 export const RefundList: FC = () => {
 

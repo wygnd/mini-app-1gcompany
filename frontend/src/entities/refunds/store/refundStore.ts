@@ -1,5 +1,5 @@
 import {create} from "zustand";
-import {RefundInterface, RefundStore} from "@/features/refunds/types/refunds.ts";
+import {RefundInterface, RefundStore} from "@/entities/refunds/types/refunds.ts";
 
 export const useRefundStore = create<RefundStore>((set, get) => ({
 	refunds: [],

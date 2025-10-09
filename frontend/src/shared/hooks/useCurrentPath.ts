@@ -1,4 +1,4 @@
-import {useUserStore} from "@/features/users/store/userStore.ts";
+import {useUserStore} from "@/entities/users/store/userStore.ts";
 import {matchRoutes, useLocation} from "react-router-dom";
 import {adminRoutes, routes as defaultRoutes} from "@/navigation/routes.tsx";
 

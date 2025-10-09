@@ -1,9 +1,9 @@
 import {ChangeEvent, FC, useState} from "react";
 import {Button, FileInput, Input} from "@telegram-apps/telegram-ui";
-import {RefundForm} from "@/features/refunds/types/createRefund.ts";
+import {RefundForm} from "@/entities/refunds/types/createRefund.ts";
 import * as React from "react";
 import styles from './CreateRefund.module.css';
-import {createRefund} from "@/features/refunds/api/refundApi.ts";
+import {createRefund} from "@/entities/refunds/api/refundApi.ts";
 
 export const CreateRefund: FC = () => {
 
