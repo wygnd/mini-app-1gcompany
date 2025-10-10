@@ -9,11 +9,11 @@ export class PaginationDto {
 		example: 1,
 		required: true
 	})
-	@IsNotEmpty({message: "Invalid page"})
+	@IsOptional()
 	@Type(() => Number)
 	@IsInt({message: "Page must be a numeric string"})
 	@Min(1)
-	page: number;
+	page?: number;
 
 	@ApiProperty({
 		description: "Limit items for query",
@@ -21,12 +21,12 @@ export class PaginationDto {
 		example: 50,
 		required: true
 	})
-	@IsNotEmpty({message: "Invalid limit"})
+	@IsOptional()
 	@Type(() => Number)
 	@IsInt({message: "Limit must be a numeric string"})
 	@Min(1)
 	@Max(50)
-	limit: number;
+	limit?: number;
 
 	@ApiProperty({
 		description: "key of sorting",

@@ -11,6 +11,8 @@ import {UserModel} from "../users/entities/users.entity";
 import {TelegramUserExtended} from "../telegram/interfaces/user-telegram.interface";
 import {UserRoles} from "../users/interfaces/users.interface";
 import {TelegramService} from "../telegram/telegram.service";
+import {FindOptions} from "sequelize";
+import {PaginatedResponseDto} from "../../common/dto/paginated-response.dto";
 
 const {refund: REDIS_REFUND_KEY} = REDIS_KEYS;
 
@@ -61,14 +63,14 @@ export class RefundsService {
 		return refundDto;
 	}
 
-	async getRefundOrdersByUserId(userId: number, params: PaginationDto) {
-		const {page, order, sort, limit} = params;
+	async getRefundOrdersByUserId(userId: number, params: PaginationDto): Promise<PaginatedResponseDto<RefundDto>> {
+		const {page = 1, limit = 10, order = 'desc', sort = 'created_at'} = params;
 
-		const refunds = await this.refundsRepository.findAll({
+		const options: FindOptions = {
 			limit: limit,
 			offset: (page - 1) * limit,
 			order: [
-				[sort ?? "created_at", order ?? "desc"],
+				[sort, order],
 			],
 			include: [{
 				model: UserModel,
@@ -76,21 +78,40 @@ export class RefundsService {
 					userId: userId,
 				}
 			}]
-		})
+		};
 
-		return refunds.map(refund => this.toDto(refund));
+		const refunds = await this.refundsRepository.findAll(options);
+		const totalCount = await this.refundsRepository.count(options);
+
+		return {
+			page: page,
+			limit: limit,
+			total: totalCount,
+			items: refunds.map(refund => this.toDto(refund))
+		};
 	}
 
 	async getRefundOrders(params: PaginationDto) {
-		const {page, order, sort, limit} = params;
+		const {page = 1, limit = 10, order = 'created_at', sort = 'desc'} = params;
 
-		return await this.refundsRepository.findAll({
+		const options: FindOptions = {
 			limit: limit,
 			offset: (page - 1) * limit,
 			order: [
-				[sort ?? "created_at", order ?? "desc"],
+				[sort, order],
 			]
-		});
+		};
+
+		const refunds = await this.refundsRepository.findAll(options);
+		const refundsTotalCount = await this.refundsRepository.count(options);
+
+		return {
+			page: page,
+			limit: limit,
+			total: refundsTotalCount,
+			items: refunds.map(refund => this.toDto(refund))
+		}
+
 	}
 
 	async removeRefundById(refundId: number) {

@@ -3,7 +3,7 @@ import {AppModule} from './app.module';
 import {DocumentBuilder, SwaggerModule} from "@nestjs/swagger";
 import {loggerMiddleware} from "./common/middlewares/loggerMiddleware";
 import {ConfigService} from "@nestjs/config";
-import {ConsoleLogger} from "@nestjs/common";
+import {ConsoleLogger, ValidationPipe} from "@nestjs/common";
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule, {
@@ -23,6 +23,7 @@ async function bootstrap() {
 	SwaggerModule.setup('api', app, () => SwaggerModule.createDocument(app, swaggerConfig));
 
 	app.use(loggerMiddleware);
+	app.useGlobalPipes(new ValidationPipe({transform: true}));
 
 	app.enableCors({
 		origin: true,

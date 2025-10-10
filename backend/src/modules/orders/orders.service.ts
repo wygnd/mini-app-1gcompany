@@ -4,6 +4,12 @@ import {UserModel} from "../users/entities/users.entity";
 import {CreateOrderDto} from "./dtos/create-order.dto";
 import {UpdateOrderFields} from "./dtos/update-order.fields";
 import {PaginationDto} from "../../common/dto/pagination.dto";
+import {FindOptions} from "sequelize";
+import {PaginatedResponseDto} from "../../common/dto/paginated-response.dto";
+import {OrderDto} from "./dtos/order.dto";
+import {RefundsModel} from "../refunds/entities/refunds.entity";
+import {plainToInstance} from "class-transformer";
+import {RefundDto} from "../refunds/dtos/refund.dto";
 
 @Injectable()
 export class OrdersService {
@@ -13,10 +19,10 @@ export class OrdersService {
 	) {
 	}
 
-	async getOrdersByUserId(userId: number, params: PaginationDto) {
-		const {page, limit, sort, order} = params;
+	async getOrdersByUserId(userId: number, params: PaginationDto): Promise<PaginatedResponseDto<OrderDto>> {
+		const {page = 1, limit = 10, sort = 'created_at', order = 'desc'} = params;
 
-		return await this.ordersRepository.findAll({
+		const options: FindOptions = {
 			where: {
 				userId: userId,
 			},
@@ -26,19 +32,39 @@ export class OrdersService {
 				[sort ?? "created_at", order ?? "desc"],
 			],
 			include: [UserModel],
-		})
+		};
+
+		const orders = await this.ordersRepository.findAll(options);
+		const ordersTotalCount = await this.ordersRepository.count(options);
+
+		return {
+			page: page,
+			limit: limit,
+			total: ordersTotalCount,
+			items: orders.map(order => this.toDto(order))
+		}
 	}
 
-	async getOrders(params: PaginationDto) {
-		let {page, limit, order, sort} = params;
+	async getOrders(params: PaginationDto): Promise<PaginatedResponseDto<OrderDto>> {
+		let {page = 1, limit = 10, order = 'created_at', sort = 'desc'} = params;
 
-		return await this.ordersRepository.findAll({
+		const options: FindOptions = {
 			limit: limit,
 			offset: (page - 1) * limit,
 			order: [
 				[sort ?? "created_at", order ?? "desc"],
 			]
-		});
+		};
+
+		const orders = await this.ordersRepository.findAll(options);
+		const ordersTotalCount = await this.ordersRepository.count(options);
+
+		return {
+			page: page,
+			limit: limit,
+			total: ordersTotalCount,
+			items: orders.map(order => this.toDto(order))
+		}
 	}
 
 	async getOrderById(orderId: number) {
@@ -59,5 +85,11 @@ export class OrdersService {
 		if (!order) throw new NotFoundException("Order not found");
 
 		return await order.update({...orderFields, userId: userId});
+	}
+
+	private toDto(order: OrdersModel) {
+		return plainToInstance(OrderDto, order, {
+			excludeExtraneousValues: true
+		})
 	}
 }
