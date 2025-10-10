@@ -6,20 +6,22 @@ import {getRefundList} from "@/entities/refunds/api/refundApi.ts";
 
 export const RefundList: FC = () => {
 
-	const {refunds} = useRefundStore();
+	const {refunds, setRefunds} = useRefundStore();
 
 	useEffect(() => {
-		if (refunds) return;
+		if (refunds.length > 0) return;
 
 		(async () => {
-			const {result, error} = await getRefundList();
+			const {refundsFromApi, error} = await getRefundList();
 
 			if (error) return void alert(error);
 
-			console.log(result);
+			if (!refundsFromApi) return void alert('Что-то пошло не так');
 
+			console.log(refundsFromApi);
+			setRefunds(refundsFromApi);
 		})()
-	}, []);
+	}, [setRefunds]);
 
 	if (refunds.length === 0) return (<Title level="1">Заявок не найдено</Title>);
 

@@ -9,13 +9,13 @@ export const createRefund = async (body: FormData): Promise<ApiResponse<RefundIn
 		const {data} = await $API.post<RefundInterface>("/refunds/create", body, {
 			headers: {"Content-Type": "multipart/form-data"}
 		});
-		return {result: data, error: null};
+		return {refundsFromApi: data, error: null};
 	} catch (err) {
 		if (axios.isAxiosError(err)) {
-			return {result: null, error: err.response?.data?.message || err.message}
+			return {refundsFromApi: null, error: err.response?.data?.message || err.message}
 		}
 
-		return {result: null, error: "Произошла непредвиденная ошибка"}
+		return {refundsFromApi: null, error: "Произошла непредвиденная ошибка"}
 	}
 }
 
@@ -30,12 +30,12 @@ export const getRefundList = async (params?: QueryParams): Promise<ApiResponse<R
 			}
 		});
 
-		return {result: data, error: null};
+		return {refundsFromApi: data, error: null};
 	} catch (err) {
 		if (axios.isAxiosError(err)) {
-			return {result: null, error: err.response?.data?.message || err.message}
+			return {refundsFromApi: null, error: err.response?.data?.message || err.message}
 		}
 
-		return {result: null, error: "Произошла непредвиденная ошибка"}
+		return {refundsFromApi: null, error: "Произошла непредвиденная ошибка"}
 	}
 }

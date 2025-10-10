@@ -10,6 +10,6 @@ export interface RefundInterface {
 
 export interface RefundStore {
 	refunds: RefundInterface[];
-	setRefund: (items: RefundInterface[] | []) => void;
+	setRefunds: (items: RefundInterface[] | []) => void;
 	add: (item: RefundInterface) => void;
 }

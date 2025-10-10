@@ -54,11 +54,11 @@ export const CreateRefund: FC = () => {
 		attachmentUrl && formData.append('file', attachmentUrl);
 
 
-		const {result, error} = await createRefund(formData);
+		const {refundsFromApi, error} = await createRefund(formData);
 
 		if (error) return void alert(error);
 
-		console.log(result);
+		console.log(refundsFromApi);
 	}
 
 	return (
