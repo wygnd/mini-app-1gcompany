@@ -9,9 +9,9 @@ export class PaginationDto {
 		example: 1,
 		required: true
 	})
-	@IsNotEmpty()
+	@IsNotEmpty({message: "Invalid page"})
 	@Type(() => Number)
-	@IsInt()
+	@IsInt({message: "Page must be a numeric string"})
 	@Min(1)
 	page: number;
 
@@ -21,9 +21,9 @@ export class PaginationDto {
 		example: 50,
 		required: true
 	})
-	@IsNotEmpty()
+	@IsNotEmpty({message: "Invalid limit"})
 	@Type(() => Number)
-	@IsInt()
+	@IsInt({message: "Limit must be a numeric string"})
 	@Min(1)
 	@Max(50)
 	limit: number;
@@ -34,8 +34,8 @@ export class PaginationDto {
 		example: "user_id",
 		required: false
 	})
-	@IsOptional()
-	@IsString()
+	@IsOptional({message: "Invalid key of sorting"})
+	@IsString({message: "Sort key must be a string"})
 	sort?: string;
 
 	@ApiProperty({
@@ -44,8 +44,8 @@ export class PaginationDto {
 		example: "desc",
 		required: false
 	})
-	@IsOptional()
-	@IsString()
+	@IsOptional({message: "Invalid ordering"})
+	@IsString({message: "Order must be a string"})
 	@IsIn(['asc', 'desc'])
 	order?: 'asc' | 'desc' = 'desc';
 }
